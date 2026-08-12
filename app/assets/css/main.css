@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Values and rationale: docs/DESIGN-TOKENS.md.
+ * Components reference these semantic names, never raw hex.
+ */
+@theme {
+  /* Brand
+   * `brand` is the Saved Page pink. It clears 3:1 (non-text) but not 4.5:1,
+   * so it is for fills, borders and decorative marks only — never text.
+   * `brand-strong` carries accent-colored text and sits under white button
+   * labels. It clears 4.5:1 on EVERY surface token below, so it needs no
+   * per-background reasoning at the call site. */
+  --color-brand: #d63494;
+  --color-brand-strong: #c02781;
+  --color-brand-deep: #64254b;
+  --color-brand-tint: #f5e5ee;
+
+  /* Focus ring. Light surfaces use brand (3.93:1 or better against every light
+   * surface). Dark surfaces must override it — see .on-ink below — because
+   * brand against ink is 2.92:1 and fails the 3:1 non-text bar. */
+  --color-focus: #d63494;
+
+  /* Support teal. The old site's help/contact voice: the "Behöver du hjälp?"
+   * block heading, the phone and email pills, and mega-menu column headings.
+   * Clears 4.5:1 on every surface token. */
+  --color-support: #33736e;
+
+  /* Required-field markers and validation errors. */
+  --color-critical: #790000;
+
+  /* Text */
+  --color-ink: #323232;
+  --color-ink-muted: #666666;
+
+  /* Surfaces */
+  --color-surface: #ffffff;
+  --color-surface-raised: #f7f8f9;
+  --color-surface-sunken: #f0f0f0;
+  --color-surface-header: #f2f2f2;
+
+  /* Type */
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+
+  /* Headings are fluid, per docs/DESIGN-TOKENS.md. Desktop endpoints match the
+   * Saved Pages: h1 42px, h2 35px, h3 29px, h4 24px. */
+  --text-h1: clamp(2rem, 1.35rem + 2.6vw, 2.625rem);
+  --text-h1--line-height: 1.2;
+  --text-h2: clamp(1.75rem, 1.3rem + 1.8vw, 2.1875rem);
+  --text-h2--line-height: 1.2;
+  --text-h3: clamp(1.5rem, 1.24rem + 1vw, 1.8125rem);
+  --text-h3--line-height: 1.2;
+  --text-h4: 1.5rem;
+  --text-h4--line-height: 1.2;
+
+  /* Space. Named layout rhythms only — anything unnamed uses Tailwind's stock
+   * 4px scale. The Saved Pages run on a 10px rhythm (10/15/20/30/40/50); those
+   * values are snapped onto the 4px grid here, so the worst drift is 2px.
+   *
+   * The three fluid tokens interpolate 360px → 1024px, which is where the
+   * shipped CSS actually switches (`@media (max-width:1024px)`), and hold flat
+   * outside that range. Same approach as the heading scale above. */
+
+  /* Container side padding: 20px → 40px. Old site: entry-content > .gb-container
+   * is 40px on desktop and drops to 20px/15px under the 1024 breakpoint. */
+  --spacing-gutter: clamp(1.25rem, 0.572rem + 3.012vw, 2.5rem);
+
+  /* Card and panel padding: 32px → 40px. Old site: .inside-article is 40px,
+   * reduced to 30px at ≤768px. 30px snaps to 32px. */
+  --spacing-card: clamp(2rem, 1.729rem + 1.205vw, 2.5rem);
+
+  /* Vertical rhythm between page sections: 32px → 48px. Old site sections carry
+   * margin-bottom 30px/50px and padding-top 40px/50px. Snapped from 30 and 50. */
+  --spacing-section: clamp(2rem, 1.458rem + 2.41vw, 3rem);
+
+  /* Rhythm between elements inside a block — the old site's dominant unit, and
+   * the h1–h4 margin-bottom. Fixed: it is a text rhythm and never scaled. */
+  --spacing-stack: 1.25rem;
+
+  /* Layout. md/lg match Tailwind defaults; xl is the site's 1366px boundary. */
+  --breakpoint-xl: 1366px;
+  --container-site: 1500px;
+
+  /* Shape: pill for buttons/CTAs, md for cards, sm for inputs. */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  /* One visible focus token everywhere. The Saved Pages had no consistent
+   * focus style; this is an intentional accessibility improvement. */
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* The dark bands — top navigation and footer — are ink on the Saved Pages.
+   * Anything inside them flips the focus ring to white (12.82:1 on ink) and
+   * must not use `brand` for text or icons, which is 2.92:1 there. */
+  .on-ink {
+    background-color: var(--color-ink);
+    color: var(--color-surface);
+    --color-focus: var(--color-surface);
+  }
+
+  /* Chrome and Safari draw their own clear affordance inside type="search": a
+   * heavy near-black glyph in the UA's own color, which belongs to no palette
+   * here. The shape is replaced with a thin cross in muted ink. Firefox draws
+   * no affordance at all, so this is progressive, not load-bearing. */
+  input[type="search"]::-webkit-search-cancel-button {
+    /* Stroke 1.5 on a 16 unit box — the same hairline weight as the submit
+     * icon, against the UA glyph's much heavier stem. */
+    --search-cancel-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 4 12 12M12 4 4 12' stroke='%23000' stroke-width='1.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");
+
+    -webkit-appearance: none;
+    appearance: none;
+    width: 0.875rem;
+    height: 0.875rem;
+    cursor: pointer;
+    background-color: var(--color-ink-muted);
+    -webkit-mask: var(--search-cancel-glyph) center / contain no-repeat;
+    mask: var(--search-cancel-glyph) center / contain no-repeat;
+  }
+
+  input[type="search"]::-webkit-search-cancel-button:hover {
+    background-color: var(--color-ink);
+  }
+}

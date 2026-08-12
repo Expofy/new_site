@@ -1,0 +1,57 @@
+{
+  "site": {
+    "name": "Expofy",
+    "tagline": "Expomaterial för mässor och event"
+  },
+  "nav": {
+    "skipToContent": "Hoppa till innehåll",
+    "primary": "Huvudnavigering",
+    "openMenu": "Öppna meny",
+    "closeMenu": "Stäng meny",
+    "menu": "Meny",
+    "account": "Konto",
+    "submenuFor": "Undermeny för {label}"
+  },
+  "search": {
+    "label": "Sök efter produkter",
+    "placeholder": "Sök efter produkter...",
+    "submit": "Sök",
+    "resultsFor": "Sökresultat för “{query}”",
+    "empty": "Inga produkter matchade din sökning.",
+    "emptyHint": "Prova ett annat ord eller bläddra bland våra kategorier.",
+    "noQuery": "Skriv något i sökfältet för att komma igång."
+  },
+  "cart": {
+    "label": "Varukorg",
+    "itemCount": "{count} artiklar i varukorgen",
+    "exclVat": "(exkl. moms)"
+  },
+  "locale": {
+    "switch": "Byt språk",
+    "sv": "Svenska",
+    "en": "Engelska"
+  },
+  "partners": {
+    "heading": "Vi stödjer:"
+  },
+  "support": {
+    "heading": "Behöver du hjälp?",
+    "contactHeading": "Kontakta oss",
+    "intro": "Ring eller maila oss direkt. Eller skicka ett meddelande via formuläret så återkommer vi så fort vi kan.",
+    "formHeading": "Kontaktformulär",
+    "requiredNote": "„*” anger obligatoriska fält",
+    "name": "Namn",
+    "email": "E-post",
+    "message": "Meddelande",
+    "submit": "Skicka formulär",
+    "privacy": "Genom att skicka formulär godkänner du vår",
+    "privacyLink": "integritetspolicy",
+    "sent": "Tack! Ditt meddelande har skickats.",
+    "required": "Obligatoriskt fält"
+  },
+  "footer": {
+    "customerService": "Kundtjänst",
+    "phoneHours": "Telefontid",
+    "navLabel": "Sidfotsnavigering"
+  }
+}
