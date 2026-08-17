@@ -3,6 +3,11 @@
     "name": "Expofy",
     "tagline": "Expomaterial för mässor och event"
   },
+  "seo": {
+    "defaultTitle": "Expofy – Expomaterial för mässor och event",
+    "defaultDescription": "Vepor, mässväggar, rollups, skyltar och flaggor med eget tryck. Snabb leverans och personlig service för mässa, event, butik och bygg.",
+    "searchDescription": "Sök bland Expofys tryck- och expoprodukter för mässa, event, butik och bygg."
+  },
   "nav": {
     "skipToContent": "Hoppa till innehåll",
     "primary": "Huvudnavigering",

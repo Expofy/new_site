@@ -5,6 +5,14 @@ const { t } = useI18n()
 const route = useRoute()
 
 const query = computed(() => String(route.query.q ?? '').trim())
+
+// Title mirrors the h1, so the tab and the search result read the same thing.
+// The description stays static: it describes the page, not the query, and a
+// query-derived description is the kind of thin text search engines discard.
+useSeoMeta({
+  title: () => (query.value ? t('search.resultsFor', { query: query.value }) : t('search.label')),
+  description: () => t('seo.searchDescription'),
+})
 </script>
 
 <template>

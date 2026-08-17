@@ -3,6 +3,11 @@
     "name": "Expofy",
     "tagline": "Exhibition material for trade fairs and events"
   },
+  "seo": {
+    "defaultTitle": "Expofy – Exhibition material for trade fairs and events",
+    "defaultDescription": "Banners, trade fair walls, roll-ups, signs and flags printed with your own design. Fast delivery and personal service for trade fairs, events and retail.",
+    "searchDescription": "Search Expofy's range of print and exhibition products for trade fairs, events, retail and construction."
+  },
   "nav": {
     "skipToContent": "Skip to content",
     "primary": "Main navigation",
