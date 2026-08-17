@@ -17,6 +17,21 @@
     "account": "Account",
     "submenuFor": "Submenu for {label}"
   },
+  "hero": {
+    "carousel": "carousel",
+    "carouselLabel": "Highlights",
+    "slide": "slide",
+    "slideOf": "{index} of {total}",
+    "previous": "Previous slide",
+    "next": "Next slide",
+    "goToSlide": "Go to slide {index}",
+    "pause": "Pause the slideshow",
+    "play": "Play the slideshow",
+    "pauseVideo": "Pause the video",
+    "playVideo": "Play the video",
+    "videoTitle": "Video",
+    "newTab": "(opens in a new tab)"
+  },
   "search": {
     "label": "Search for products",
     "placeholder": "Search for products...",

@@ -17,6 +17,21 @@
     "account": "Konto",
     "submenuFor": "Undermeny för {label}"
   },
+  "hero": {
+    "carousel": "karusell",
+    "carouselLabel": "Bildspel",
+    "slide": "bild",
+    "slideOf": "{index} av {total}",
+    "previous": "Föregående bild",
+    "next": "Nästa bild",
+    "goToSlide": "Gå till bild {index}",
+    "pause": "Pausa bildspelet",
+    "play": "Spela bildspelet",
+    "pauseVideo": "Pausa videon",
+    "playVideo": "Spela videon",
+    "videoTitle": "Video",
+    "newTab": "(öppnas i ny flik)"
+  },
   "search": {
     "label": "Sök efter produkter",
     "placeholder": "Sök efter produkter...",

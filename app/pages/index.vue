@@ -20,6 +20,10 @@ const swatches = [
 </script>
 
 <template>
+  <!-- First front-page block. Everything below it is still the Phase 1
+       verification page and goes when Phase 3 lands. -->
+  <AppHero group="front-page" />
+
   <div class="mx-auto max-w-site px-4 py-12">
     <h1 class="text-h1 mb-2">{{ t('site.name') }}</h1>
     <p class="text-ink-muted mb-8">{{ t('site.tagline') }}</p>
