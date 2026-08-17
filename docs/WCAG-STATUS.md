@@ -16,7 +16,7 @@ How each row was checked:
 - Markup read for landmark, label, role, and heading semantics.
 - Focus behaviour traced through the CSS cascade, including inherited `--color-focus`.
 
-**Almost nothing here is verified in a browser.** The project has no Playwright or Puppeteer, so findings are derived from source and computed values rather than from a rendered screenshot, a real screen-reader pass, or a real keyboard walk. The one exception is A11Y-08, which is a rendering defect and was compared in headless Firefox and Chrome. Anything marked ⚠ should also be confirmed by hand before it is closed.
+**Most of this is not verified in a browser.** The project has no Playwright or Puppeteer, so findings are derived from source and computed values rather than from a rendered screenshot, a real screen-reader pass, or a real keyboard walk. The exceptions are the two rendering claims: A11Y-08, compared in headless Firefox and Chrome, and A11Y-01, screenshotted in headless Chrome with the focus declarations forced on. Anything marked ⚠ should also be confirmed by hand before it is closed.
 
 ## Status
 
@@ -25,10 +25,12 @@ How each row was checked:
 | `AppSkipLink` | ✅ pass | Visible on focus, `brand-deep` on white 11.01:1, targets `#main-content` which is `tabindex="-1"`. |
 | `AppHeader` | ✅ pass | Layout only, no interactive elements of its own. |
 | `AppLogo` | ✅ pass | Linked home, `alt` from `site.name`, intrinsic size matches each asset. |
-| `AppSearchField` | ⚠ partial | Audited and repaired this session — see A11Y-04/05/07/08 in Closed. Focus indicator is now a 1px colour change by decision — **A11Y-09**. |
+| `AppSearchField` | ⚠ partial | Audited and repaired — see A11Y-04/05/07/08 in Closed. Focus indicator is a 1px colour change by decision — **A11Y-09**. Now renders twice (header + drawer); the instances take separate `id`s and the drawer's drops `role="search"` so there is one search landmark. |
 | `AppCartSummary` | ⚠ partial | Passes AA. `aria-label` suppresses the visible subtotal for screen readers — **A11Y-03**. |
-| `AppNav` | ❌ **fail** | Mega-menu focus ring is white on a white panel, 1:1 — **A11Y-01**. |
-| `AppMobileDrawer` | ✅ pass | reka-ui `Dialog` gives focus trap, Escape, and focus restore. Labels on trigger and close. `white/60` group labels on ink 5.71:1. |
+| `AppNav` | ✅ pass | Mega-menu rebuilt this session. A11Y-01 closed: the panel re-asserts `--color-focus`, verified pink not white in headless Chrome. Panel and column headings name their lists via `aria-labelledby`; tile images are `alt=""` because the label beside them is the link's name. |
+| `AppMobileDrawer` | ✅ pass | Rebuilt this session as a full-bleed light panel. reka-ui `Dialog` gives focus trap, Escape, and focus restore; `Accordion` headers are `h2` so no level is skipped. Section bars are `.on-ink`, white on ink 12.82:1; teal column headings on white 4.54:1. |
+| `AppHero` | ⚠ partial | APG carousel: `aria-roledescription`, per-slide `role="group"` with "N of M", `aria-live` that is `off` while rotating and `polite` once stopped. One control stops both rotation and video (2.2.2); rotation also holds on hover and focus. Dots are 24×24 targets marked by width as well as fill. **Not verified with a screen reader** — the live region is the part that most needs it. |
+| `AppHeroSlide` | ⚠ partial | Contrast holds **only because the scrim is on** — see A11Y-10. Background video is `aria-hidden` decoration; it plays only while its slide is active and the hero is unpaused. Focus rings follow the text theme. |
 | `AppPartnerStrip` | ✅ pass | Tile borders are 1.25:1 but the tiles are non-interactive and carry their own text, so 1.4.11 does not apply. |
 | `AppSupportBlock` | ❌ **fail** | Four form controls with a 1.25:1 boundary — **A11Y-02**. Submit button has no hover/active/pointer — **A11Y-06**. |
 | `AppFooter` | ✅ pass | Columns are labelled `nav` landmarks; `white/70` meta text 7.20:1. |
@@ -40,13 +42,16 @@ Page level, both locales: `<html lang="sv-SE">` / `lang="en-GB"` ✓ (3.1.1), si
 
 ## Open Findings
 
-### A11Y-01 — Mega-menu focus ring is invisible ❌
+### A11Y-10 — Hero overlay contrast is only as good as its scrim ⚠
 
-**`AppNav.vue`, SC 2.4.7 (AA).** `.on-ink` sets `--color-focus: var(--color-surface)` so the ring stays visible on the dark bar. Custom properties inherit by DOM position, and `NavigationMenuContent` renders *inside* that element — reka-ui only teleports it when a `NavigationMenuViewport` exists, and `AppNav` has none, so its `Teleport` is disabled. The panel is `bg-surface`, so every mega-menu link gets a **white ring on a white panel: 1:1**. Keyboard users lose their position entirely inside the largest navigation surface on the site.
+**`AppHeroSlide.vue`, SC 1.4.3 (AA).** The overlay sits on a photograph or a video frame, so nothing in the data says what colour is behind the text. The only thing that makes it measurable is "Add dark overlay behind text", and the renderer sizes that scrim for its worst case — the media being the opposite extreme of the text:
 
-Fix: re-assert `--color-focus` on the panel, since it is a light surface living inside a dark band. The panel already opts out of `.on-ink`'s colours (`bg-surface text-ink`); it should opt out of its focus colour too.
+- Light text: `black/60` over a pure white frame composites to `#666`, and white on `#666` is **5.74:1**. Any darker media only helps. (`black/45`, the more usual choice, gives `#8c8c8c` and **3.36:1** — enough for the headline as large text, not for the paragraph.)
+- Dark text: `white/70` over pure black composites to `#b2b2b2`, and `ink` on `#b2b2b2` is **6.05:1**.
 
-⚠ Confirm by tabbing into an open mega menu once a browser is available.
+So a scrimmed slide passes whatever the media is. **A slide with the scrim off does not have a knowable contrast at all** — it depends on the frame. `test/hero.test.ts` fails the build if data puts light text on media without one, which covers the case that actually goes wrong; dark text on a pale image is left to editorial judgement because the test cannot see the image either.
+
+⚠ Whoever connects the backend should keep this test, or the setting becomes decoration and the failure mode returns silently.
 
 ### A11Y-02 — Support form controls have no visible boundary ❌
 
@@ -80,6 +85,7 @@ Fix: drop the `aria-label` and let the inner text form the accessible name, movi
 
 | ID | Component | What it was |
 | --- | --- | --- |
+| A11Y-01 | `AppNav` | Mega-menu focus ring was white on a white panel, **1:1**. `.on-ink` sets `--color-focus: var(--color-surface)` so the ring stays visible on the dark bar; custom properties inherit by DOM position, and `NavigationMenuContent` renders *inside* that element — reka-ui only teleports it when a `NavigationMenuViewport` exists, and there is none here. The panel now re-asserts `--color-focus: var(--color-brand)`, the same way it already opted out of the band's background. **Verified**, not derived: the focus declarations were forced onto every panel link and screenshotted in headless Chrome — the ring draws pink (3.93:1 on white), not white. |
 | A11Y-04 | `AppSearchField` | Input boundary `black/10`, 1.25:1 vs the required 3:1 → `black/45`, 3.36:1. |
 | A11Y-05 | `AppSearchField` | Submit button's focus ring was `brand` on `brand-strong` — **1.24:1**, effectively invisible → white, 5.46:1, drawn inset. |
 | A11Y-07 | `AppSearchField` | Focus ring on the input was an *outer* ring on a half-rounded control, so it drew a square edge across the submit button. Both halves now ring themselves inset. |
@@ -89,7 +95,7 @@ Fix: drop the `aria-label` and let the inner text form the accessible name, movi
 
 Recorded so they are decisions rather than oversights. None of these fail the AA bar.
 
-- **2.5.5 Target Size (44×44)** — the search submit button is 60×42, two pixels short. Every other control clears it. Under WCAG 2.2's AA equivalent (2.5.8, 24×24) everything passes comfortably.
+- **2.5.5 Target Size (44×44)** — the search submit button is 60×42, two pixels short, and the drawer's text-only menu rows are 40px tall. Both clear WCAG 2.2's AA equivalent (2.5.8, 24×24), as does everything else. Mega-menu text links needed `py-1` to get there: an inline box is only as tall as its glyphs, so without padding a 16px link is roughly 19px, under the 24px bar.
 - **1.4.6 Contrast (Enhanced, 7:1)** — `brand-strong` text tops out at 5.46:1 on white. Raising it would break the visual direction the rebuild is preserving.
 
 <!-- ─────────────────────────────────────────────────────────────────────────
@@ -101,11 +107,13 @@ Recorded so they are decisions rather than oversights. None of these fail the AA
 
 Observations from reading the components that are not accessibility findings.
 
-**The weak-border pattern is systemic, not local.** `border-black/10` appears in `AppSearchField` (fixed), `AppSupportBlock` (A11Y-02), `AppPartnerStrip`, and `pages/index`. Only the first two are violations, because only they wrap interactive controls — but it is one habit producing both, and it will keep producing them. A `--color-border-field` token set to a value that clears 3:1 would make the correct choice the default one. Worth considering before more form components land.
+**The mega-menu tile border is decoration, not a control boundary.** The image panels draw each 64px tile with `border-black/10` — 1.25:1, the same weak border A11Y-02 is about. It is not a 1.4.11 failure here for the reason `AppPartnerStrip` passes: what identifies the link is the label beside the tile, which is also its accessible name, and the tile itself is `alt=""`. If the label is ever dropped so the tile becomes the whole target, this border has to clear 3:1.
+
+**The weak-border pattern is systemic, not local.** `border-black/10` appears in `AppSearchField` (fixed), `AppSupportBlock` (A11Y-02), `AppPartnerStrip`, `AppNav`/`AppMobileDrawer` (tiles, above), and `pages/index`. Only the first two are violations, because only they wrap interactive controls — but it is one habit producing both, and it will keep producing them. A `--color-border-field` token set to a value that clears 3:1 would make the correct choice the default one. Worth considering before more form components land.
 
 **Spacing tokens have one adopter.** `AppHeader` uses `px-gutter` / `py-stack`; `AppFooter`, `AppSupportBlock`, `AppPartnerStrip`, and both pages still hardcode `px-4 py-12`. Not urgent, but the longer the split lasts the more call sites have to be revisited later.
 
-**`cursor-pointer` is missing project-wide.** Tailwind v4's preflight no longer sets it on `<button>`. `AppSearchField` was fixed inline; `AppMobileDrawer`'s trigger and close, and `AppSupportBlock`'s submit, still show the default arrow. A single `@layer base` rule for `button:not(:disabled)` would close all of them at once and prevent recurrence — probably better than patching each component.
+**`cursor-pointer` is missing project-wide.** Tailwind v4's preflight no longer sets it on `<button>`. `AppSearchField`, `AppMobileDrawer`'s trigger/close/accordion and `AppNav`'s trigger were each fixed inline; `AppSupportBlock`'s submit still shows the default arrow. A single `@layer base` rule for `button:not(:disabled)` would close all of them at once and prevent recurrence — probably better than patching each component.
 
 **`AppSupportBlock` is the most complex thing built so far** and the only real form. It is the natural place for the first validation-error pattern, and the checklist's "error summaries" and "errors associated with their field" lines are currently untested because nothing can fail — `onSubmit` only flips a local flag. Expect this component to need a second audit once a backend exists.
 
