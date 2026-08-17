@@ -111,6 +111,27 @@
     --color-focus: var(--color-surface);
   }
 
+  /* Mega-menu panel grid. The column count is data rather than a class: a panel
+   * is exactly as many columns wide as its `columns` array is long (see
+   * app/types/navigation.ts), and Tailwind cannot generate a `grid-cols-N`
+   * utility for a number it never sees at build time — so the count arrives as
+   * --nav-columns on the element.
+   *
+   * Below the site's xl boundary the declared count is dropped for auto-fit:
+   * `repeat()` takes an integer and there is no way to clamp a custom property
+   * down to one. auto-fit keeps each column whole and wraps it onto a second
+   * row, so an item never migrates into a column it was not placed in. */
+  .nav-panel-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--nav-columns), minmax(0, 1fr));
+  }
+
+  @media (max-width: 1365px) {
+    .nav-panel-grid {
+      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    }
+  }
+
   /* Chrome and Safari draw their own clear affordance inside type="search": a
    * heavy near-black glyph in the UA's own color, which belongs to no palette
    * here. The shape is replaced with a thin cross in muted ink. Firefox draws

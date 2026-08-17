@@ -1,4 +1,19 @@
 <script setup lang="ts">
+/**
+ * The header and the mobile drawer are on screen at the same time — the drawer
+ * covers the header rather than replacing it — so this renders twice and each
+ * instance needs its own `id` for the label to point at.
+ *
+ * `landmark` exists for the same reason. Two `role="search"` landmarks with the
+ * same name are worse than one, so the drawer's copy drops the role: inside an
+ * open dialog it is a form the user has already navigated to, not a region to
+ * be found by landmark.
+ */
+const props = withDefaults(defineProps<{ id?: string, landmark?: boolean }>(), {
+  id: 'site-search',
+  landmark: true,
+})
+
 const { t } = useI18n()
 const localePath = useLocalePath()
 const router = useRouter()
@@ -13,8 +28,8 @@ function onSubmit() {
 </script>
 
 <template>
-  <form role="search" class="flex w-full items-stretch" @submit.prevent="onSubmit">
-    <label for="site-search" class="sr-only">{{ t('search.label') }}</label>
+  <form :role="props.landmark ? 'search' : undefined" class="flex w-full items-stretch" @submit.prevent="onSubmit">
+    <label :for="props.id" class="sr-only">{{ t('search.label') }}</label>
     <!-- The field's whole focus indicator is its own 1px border turning `focus`.
          That is a deliberate call — see A11Y-09 in docs/WCAG-STATUS.md for the
          contrast it costs. Anything thicker has to be added *outside* the border,
@@ -31,7 +46,7 @@ function onSubmit() {
          across the submit button — but keeps a transparent one under
          forced-colors, where the UA repaints outlines and drops box-shadows. -->
     <input
-      id="site-search"
+      :id="props.id"
       v-model="query"
       type="search"
       name="q"
