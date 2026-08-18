@@ -35,6 +35,10 @@
   "categories": {
     "heading": "Popular categories"
   },
+  "services": {
+    "heading": "Services",
+    "readMore": "Read more"
+  },
   "search": {
     "label": "Search for products",
     "placeholder": "Search for products...",

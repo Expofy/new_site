@@ -154,6 +154,7 @@ Note: heading weight 400 at 42px is a deliberate light look. It is preserved, bu
 
 - Content container: **1500px** max width (`--gb-container-width`, and the theme's `.grid-container` override). GeneratePress's stock 1200px is overridden and is not the site value.
 - Breakpoints in use: **768px**, **1024px**, **1366px**. A handful of plugin rules use 767/769/1025 boundaries; the rebuild should normalize to Tailwind's `md` 768, `lg` 1024, and a custom `xl` at 1366.
+  - **`xl:` utilities do not work at this boundary.** Overriding `--breakpoint-xl` to 1366px makes Tailwind emit the `xl` block *before* `sm`/`md`/`lg` in the stylesheet, so above 1366px every one of those queries matches and the last one in the file — `lg` — wins. An `xl:` utility written to override an `lg:` one silently loses. Reach the 1366 boundary with a hand-written media query in `main.css` instead; `.nav-panel-grid` and `.card-track` both do.
 - Border radius: `30px` pill for buttons and CTAs; `20px` on the search field's trailing edge; `4px`/`5px`/`8px` on smaller surfaces; `50%`/`100%` for circular. Adopt a three-step scale — pill (`9999px`), medium (`8px`), small (`4px`) — rather than carrying seven values.
 - Button padding: `15px 20px` and `15px 25px`. Snapped to the 4px grid (below) these are `py-4 px-5` and `py-4 px-6`. No token — padding that belongs to one component is a component decision.
 - Vertical rhythm: `20px` heading margin-bottom is the dominant spacing unit; the 4px-based Tailwind scale covers it.

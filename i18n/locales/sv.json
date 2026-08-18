@@ -35,6 +35,10 @@
   "categories": {
     "heading": "Populära kategorier"
   },
+  "services": {
+    "heading": "Tjänster",
+    "readMore": "Läs mer"
+  },
   "search": {
     "label": "Sök efter produkter",
     "placeholder": "Sök efter produkter...",

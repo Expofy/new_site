@@ -132,6 +132,85 @@
     }
   }
 
+  /* The service slider's track. A horizontal scroller is the block's only
+   * affordance for "there is more to the right" that survives a user who never
+   * touches the arrow buttons, so the bar is styled rather than hidden — the UA
+   * default is a heavy grey that belongs to no palette here.
+   *
+   * Firefox takes the two-keyword form; Chrome and Safari need the pseudo
+   * elements, and ignore the first two declarations. Neither is load-bearing:
+   * where both are unsupported the bar simply stays the UA's own. */
+  .card-track {
+    /* How many cards are on screen. Declared as a count and turned into a width
+     * by one formula, so the gap is subtracted correctly at every step and only
+     * the number changes per breakpoint — the same idiom as --nav-columns.
+     *
+     * --card-track-columns-max is set on the element by the component, from
+     * data, and is the only number anyone should need to change. The 6 here is
+     * a fallback for a track rendered without it, not the site's answer.
+     *
+     * The steps are hand-written media queries rather than `sm:`/`xl:` utilities
+     * for a reason worth knowing: this project overrides --breakpoint-xl to
+     * 1366px, and Tailwind then emits the xl block BEFORE sm/md/lg. Above
+     * 1366px every one of those queries matches, so the last one in the file —
+     * lg — wins and `xl:` silently loses. `.nav-panel-grid` above sidesteps the
+     * same boundary the same way. */
+    --card-track-columns-max: 6;
+    --card-track-columns: 1;
+    --card-track-gap: 1rem;
+
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc(
+      (100% - (var(--card-track-columns) - 1) * var(--card-track-gap)) / var(--card-track-columns)
+    );
+    gap: var(--card-track-gap);
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-support) transparent;
+  }
+
+  /* Each step is a ceiling, not a count: `min()` against the configured maximum
+   * means a block set to 3 shows three from 768px up and never four, while one
+   * set to 6 still steps 1 → 2 → 3 → 4 → 6 on the way down. One knob, and the
+   * narrow end stays legible whatever it is set to. */
+  @media (width >= 40rem) {
+    .card-track {
+      --card-track-columns: min(var(--card-track-columns-max), 2);
+    }
+  }
+
+  @media (width >= 48rem) {
+    .card-track {
+      --card-track-columns: min(var(--card-track-columns-max), 3);
+    }
+  }
+
+  @media (width >= 64rem) {
+    .card-track {
+      --card-track-columns: min(var(--card-track-columns-max), 4);
+    }
+  }
+
+  @media (width >= 1366px) {
+    .card-track {
+      --card-track-columns: var(--card-track-columns-max);
+    }
+  }
+
+  .card-track::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .card-track::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .card-track::-webkit-scrollbar-thumb {
+    background: var(--color-support);
+    border-radius: 999px;
+  }
+
   /* Chrome and Safari draw their own clear affordance inside type="search": a
    * heavy near-black glyph in the UA's own color, which belongs to no palette
    * here. The shape is replaced with a thin cross in muted ink. Firefox draws

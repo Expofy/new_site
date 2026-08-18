@@ -29,6 +29,17 @@ Typed in `app/types/category.ts`, populated in `app/data/categories.ts`. Backs t
 - No alt text travels with the image. The tile always renders it `alt=""`, because the label is already the link's accessible name.
 - Renders are the Saved Page's own transparent PNGs in `public/categories/`, renamed after the category. They are square, which is what lets the tile state one intrinsic size for all ten; a test fails if one stops being square, or if a file is missing.
 
+## Services
+
+Typed in `app/types/service.ts`, populated in `app/data/services.ts`. Backs the front page's "Tjänster" block.
+
+- How many cards are on screen is **not** part of this data — it is a `columns` prop on the block, backend-owned, described in `CURRENT-STATE.md`.
+- A card is `id`, `eyebrow`, `title`, `description`, `to`, `image`. Array order is render order — a curated order, not a ranking, which is why the list renders as a `ul`. There is no `order` field to disagree with it.
+- The block is new; the services are not. All six are pages the old site already publishes, and four of them are in the mega menu under "Behöver du hjälp?". `test/services.test.ts` pins those four to the menu's paths, and asserts the overlap is exactly four so an emptied `navigation.ts` cannot make the check pass vacuously.
+- Paths are `/landing/`, never `/category/`. A service is something Expofy does, not something with a price and a cart button, and the two live in different route trees. Avancerad filkontroll and Snabbproduktion sit under `/tjanster/` on the old site; that split was a WordPress accident and is not carried forward.
+- `eyebrow` is a grouping, not a heading — several cards share one — and unlike the illustration it *is* read out, because it is the only thing saying that two cards belong to the same part of the offer.
+- Illustrations live in `public/services/`, one per service, named after it. The card reserves a fixed 108px-tall box and fits each drawing into it with `object-contain`, so the assets own their aspect ratio and a re-export cannot change the card height. Tests fail if a file is missing, or if the six stop agreeing with *each other* on aspect ratio — one odd drawing would letterbox itself and sit visibly smaller than its neighbours.
+
 ## Prices
 
 - The frontend never computes a price or a total. It formats amounts it was given — see Backend Boundaries in `PROJECT-PLAN.md`.
