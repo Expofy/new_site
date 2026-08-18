@@ -133,6 +133,12 @@ watch(() => props.active && props.motion, (mayPlay) => {
       class="absolute inset-0 -z-10 size-full object-cover"
     />
 
+    <!-- `allow` deliberately omits `autoplay`. A Resource URL is whatever the
+         admin pasted, so it may well carry `?autoplay=1` — and this component
+         has no way to offer a pause control for a cross-origin player, which
+         SC 2.2.2 would then require. Permissions Policy defaults the `autoplay`
+         feature to `self`, so leaving it off this list is what denies it to the
+         embed. Do not add it. -->
     <iframe
       v-else-if="videoEmbed"
       :src="videoEmbed"

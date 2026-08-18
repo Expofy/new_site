@@ -114,12 +114,18 @@ const motionLabel = computed(() => {
       </div>
     </div>
 
-    <!-- Controls sit on unknown media, so they carry their own dark pill and
-         re-assert a white focus ring — brand pink is 1.46:1 there. -->
+    <!-- Controls sit on unknown media, so they carry their own dark pill: white
+         on it is 5.74:1 even if the media behind is pure white, where brand pink
+         would be 1.46:1.
+         The focus ring has to stay ON that pill. The global `:focus-visible`
+         outline is offset 2px OUTSIDE its element, which put a white ring on the
+         slide itself — invisible on a pale photograph, and 1.10:1 on the HTML
+         slide's `surface-sunken`. So these draw their own ring inset instead,
+         the same fix and the same pseudo-element mechanism as A11Y-05/07/08. -->
     <template v-if="canRotate">
       <button
         type="button"
-        class="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-black/60 p-3 text-white transition-colors hover:bg-black/80 [--color-focus:var(--color-surface)]"
+        class="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-black/60 p-3 text-white transition-colors after:pointer-events-none after:absolute after:inset-1 after:rounded-full after:border-2 after:border-transparent hover:bg-black/80 focus-visible:outline-hidden focus-visible:after:border-white"
         :aria-label="t('hero.previous')"
         @click="go(index - 1)"
       >
@@ -130,7 +136,7 @@ const motionLabel = computed(() => {
 
       <button
         type="button"
-        class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-black/60 p-3 text-white transition-colors hover:bg-black/80 [--color-focus:var(--color-surface)]"
+        class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-black/60 p-3 text-white transition-colors after:pointer-events-none after:absolute after:inset-1 after:rounded-full after:border-2 after:border-transparent hover:bg-black/80 focus-visible:outline-hidden focus-visible:after:border-white"
         :aria-label="t('hero.next')"
         @click="go(index + 1)"
       >
@@ -144,9 +150,14 @@ const motionLabel = computed(() => {
       v-if="showControls"
       class="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full bg-black/60 px-2 text-white [--color-focus:var(--color-surface)]"
     >
+      <!-- The pause button is exactly as tall as the pill it sits in, so an
+           outset ring would hang 2px over the pill's edge onto the slide. It
+           rings itself inset for the same reason the arrows do. The dots below
+           are 24px in a 40px pill, so their outset ring still lands on the
+           pill and is left alone. -->
       <button
         type="button"
-        class="cursor-pointer rounded-full p-3"
+        class="relative cursor-pointer rounded-full p-3 after:pointer-events-none after:absolute after:inset-1 after:rounded-full after:border-2 after:border-transparent focus-visible:outline-hidden focus-visible:after:border-white"
         :aria-label="motionLabel"
         @click="paused = !paused"
       >
