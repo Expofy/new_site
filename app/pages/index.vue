@@ -20,10 +20,14 @@ const swatches = [
 </script>
 
 <template>
-  <!-- Front-page blocks, in the Saved Page's order. Everything below them is
-       still the Phase 1 verification page and goes when Phase 3 lands. -->
+  <!-- Front-page blocks, in the Saved Page's order — except the promo band,
+       which has no counterpart on the old site and is placed here because it
+       breaks the run of white blocks between the categories and the services.
+       Everything below them is still the Phase 1 verification page and goes
+       when Phase 3 lands. -->
   <AppHero group="front-page" />
   <AppCategoryGrid />
+  <AppPromoBanner id="eco" />
   <AppServiceSlider :columns="5" />
 
   <div class="mx-auto max-w-site px-4 py-12">

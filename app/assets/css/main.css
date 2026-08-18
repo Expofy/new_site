@@ -29,6 +29,32 @@
   /* Required-field markers and validation errors. */
   --color-critical: #790000;
 
+  /* Eco green. A third editorial voice beside `brand` (what sells) and
+   * `support` (what helps): the range's environmental story, which today is the
+   * front page's "grönare framtid" band and nothing else.
+   *
+   * It exists because that band needs a button, and neither of the other two
+   * voices can be it — pink is the commerce colour and teal is the help desk,
+   * and the band is about a forest.
+   *
+   * Unlike the brand triple, all three of these are safe under white text, and
+   * the ordering is by role rather than by "may this be text": `eco` is the
+   * button at rest, `eco-strong` is where it goes on hover, `eco-deep` is the
+   * scrim. Hover goes *darker* here while the brand button goes lighter, and
+   * that is forced rather than chosen: `eco` already sits as bright as the
+   * 4.5:1 bar allows, so there is nothing above it a white label survives.
+   *
+   * The hue is warm on purpose — around 94°, a yellow-green rather than the
+   * 137° bottle green these started at. Warmth is not free: a yellow-green is
+   * lighter than a blue-green of the same depth, so every step toward it is
+   * paid for in contrast, and this set is the warmest one where the band's
+   * white text still clears 4.5:1 and its icon ring still clears 3:1. Both
+   * margins are thin now (4.98:1 and 3.33:1) — see AppPromoBanner.vue. Warming
+   * these further means re-measuring the composites, not just nudging the hex. */
+  --color-eco: #458018;
+  --color-eco-strong: #3f7516;
+  --color-eco-deep: #2f561f;
+
   /* Text */
   --color-ink: #323232;
   --color-ink-muted: #666666;

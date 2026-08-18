@@ -40,6 +40,17 @@ Typed in `app/types/service.ts`, populated in `app/data/services.ts`. Backs the 
 - `eyebrow` is a grouping, not a heading — several cards share one — and unlike the illustration it *is* read out, because it is the only thing saying that two cards belong to the same part of the offer.
 - Illustrations live in `public/services/`, one per service, named after it. The card reserves a fixed 108px-tall box and fits each drawing into it with `object-contain`, so the assets own their aspect ratio and a re-export cannot change the card height. Tests fail if a file is missing, or if the six stop agreeing with *each other* on aspect ratio — one odd drawing would letterbox itself and sit visibly smaller than its neighbours.
 
+## Promo bands
+
+Typed in `app/types/promo.ts`, populated in `app/data/promo.ts`. Backs the front page's "grönare framtid" band.
+
+- A band is `id`, optional `icon`, `image`, `headline`, `text`, and a required `button`. The button is required because a promo band with nothing to click is a decorative photograph with a slogan on it.
+- Nothing iterates the list. A page names the band it wants by `id` — `<AppPromoBanner id="eco" />` — because a promo's whole job is to sit between two particular blocks. That is also why there is no `group` field like the hero's: a hero rotates a set, a band is one thing in one place.
+- `icon` is a union of the marks the component can actually draw, not a free string. The shapes are inline SVG so they inherit `currentColor`; a name with no path behind it would render an empty ring.
+- The photograph is always decorative and carries no alt text — the component renders it `alt=""`. The band's message is the headline and the paragraph, which are real text. A picture with something to say would have to be a figure, not a background, and would have to survive being cropped to a ~220px strip, which nothing informative does.
+- **Framing is a property of the file, not of CSS.** The band is far wider than it is tall, so `object-fit: cover` scales the photograph to the band's width and crops it vertically only — the horizontal half of `object-position` does nothing at any viewport the block is used at. Moving the subject sideways means re-cropping the source. `docs/assets/promo/README.md` holds the originals and the exact recipe; `public/` holds only the derived JPEG.
+- `test/promo.test.ts` fails the build if a band's `button.to` is not a page the mega menu carries, and if a photograph is missing, lossless, or over 600 KB — the first source arrived as a 5.2 MB PNG, and nothing else in the pipeline would have reported it.
+
 ## Prices
 
 - The frontend never computes a price or a total. It formats amounts it was given — see Backend Boundaries in `PROJECT-PLAN.md`.

@@ -175,6 +175,30 @@ Values are guarded in the component (`Math.max(1, Math.round())`) because the nu
 
 Card height is *not* pinned across column counts — see the bullet above for why that was tried and removed. Every card in a row is the same height regardless, because they are grid items in one row.
 
+### Promo band
+
+`AppPromoBanner.vue` sits between the categories and the services: a photograph of a sunlit forest with a deer in it, a leaf mark in a ring, "Tillsammans för en grönare framtid", one sentence, and a single CTA. New in V2 — the old site has no equivalent — and built from a supplied design. Content is `app/data/promo.ts`; the shape is in `DATA-MODEL.md`.
+
+It is a **contained panel**, not a full-bleed band. It sits in the same `max-w-site px-gutter` column as the blocks above and below and carries the `md` card radius, and its own text is inset again with `px-card`. The headline therefore does not line up with "Populära kategorier" above it, which is correct — it is inside something.
+
+The block draws at 220px and `min-h-50` (200px) is a floor below that, not the height. A fixed height would clip the paragraph rather than grow; under the 1.4.12 text-spacing overrides the band goes to 267px instead of losing a line.
+
+**The scrim is the whole accessibility story.** White text sits on a photograph nobody has measured, so `eco-deep` at 80% is what makes its contrast knowable at all: over the brightest frame possible it composites to `#59784c`, and white on that is 4.98:1. Unlike the hero's, this scrim cannot be switched off by data, so `AppHeroSlide`'s A11Y-10 failure mode does not exist here.
+
+**The scrim's stop positions are load-bearing and were got wrong twice.** They are percentages of the *band*, and the rule they have to obey is that the scrim is still flat where the text ends — a gradient already fading under the last words puts them on partial scrim, around 2.4:1 over a bright frame, which is a failure that only shows at some widths and only for some strings. The first version faded from 48% while the text ran to 62.5% at 768px. Containing the block later changed the band from "the viewport" to "`max-w-site` minus two gutters" and invalidated the numbers again. What holds now, measured across thirteen widths: the reveal starts at `lg`, and below it both gradient stops are the same opaque colour so the fill is flat and text position cannot matter; at and above `lg` the flat region runs to 58% against a worst case of 52.5% at exactly 1024px, after which the text's share falls monotonically to 34.4% and pins there from 1580px up.
+
+### How the promo band's look is dialled
+
+| Knob | Where | Notes |
+| --- | --- | --- |
+| Which band renders | `id` prop on `<AppPromoBanner>` | Named per page, not iterated. An unknown id renders nothing at all |
+| Band height | `py-9` on the inner wrapper, floored by `min-h-50` | 220px today. The floor must stay *below* the drawn height or it stops being a floor |
+| Where the photo's subject sits | the file in `public/promo/`, **not** `object-position` | Horizontal `object-position` is inert at this aspect ratio — see `DATA-MODEL.md`. Vertical `object-[center_88%]` does work, and picks the slice |
+| How much photo is revealed | the two gradient stops on the scrim | Re-measure the text's share of the band before moving them; the worst case is at the `lg` breakpoint, not at the widest viewport |
+| Green | `--color-eco` / `-strong` / `-deep` in `main.css` | Warm 94° yellow-green. Little margin left — `DESIGN-TOKENS.md` has the arithmetic |
+
+The greens were lightened once and warmed once on the brief that the block should read brighter and warmer, and both are paid for in luminance: white on the scrim went 7.98 → 5.29 → 4.98:1 against a 4.5 floor, and the icon ring 4.89 → 3.51 → 3.33:1 against a 3.0 floor. Warming also took the button's fill to 1.03:1 against the scrim — the same brightness as its surroundings, separated only by hue — which is why the pill carries a `white/70` ring rather than leaning on its label the way the hero's overlay button still does.
+
 ## Next
 
 Nothing is claimed for the main menu beyond the above. The remaining known queue, in order:
@@ -183,3 +207,4 @@ Nothing is claimed for the main menu beyond the above. The remaining known queue
 - The systemic items from the audit notes: a `--color-border-field` token so the correct border is the default one, and a single `@layer base` rule for `cursor-pointer` on buttons.
 - A real keyboard and screen-reader pass over the finished header + menu + hero, which is the only thing that can close A11Y-03 and A11Y-09, and the only way to know whether the carousel's live region actually reads well.
 - The next front-page block, whichever it is.
+- `docs/assets/promo/` holds 7.4 MB of PNG sources outside `public/`. Fine in git for now, but worth a decision before more photographic blocks land — the repo will accumulate one uncropped original per band.

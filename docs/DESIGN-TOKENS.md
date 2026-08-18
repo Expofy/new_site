@@ -38,6 +38,26 @@ It was missed in the first extraction pass — it appears 23 times in the front-
 
 `#00796b` also appears, as the mega-menu badge background. Same teal family, plugin-configured. Folded into the one support token rather than kept separately.
 
+### Eco Green
+
+Not extracted — **new in V2**. The front page's promo band (`AppPromoBanner`) is about the environmental range, and it needs a button; neither existing voice can be it, because pink is the commerce colour and teal is the help desk.
+
+The hue is a warm yellow-green, around **94°**, arrived at over three passes — the set started at a 137° bottle green and was warmed on the brief that the band should read warmer and brighter. Warmth is not free: a yellow-green is lighter than a blue-green of the same depth, so every step toward it is paid for in contrast. Values are therefore picked from the bar down, not from the mockup out, because the band's label is white on the fill:
+
+| `#ffffff` on | Ratio | |
+| --- | --- | --- |
+| `#548e12` | 4.00 | fails |
+| `#4a8a1e` | 4.25 | fails |
+| `#4c8410` | 4.55 | passes, no margin |
+| **`#458018`** — `eco`, the fill at rest | **4.82** | pass |
+| **`#3f7516`** — `eco-strong`, hover and active | **5.57** | pass |
+
+`eco` sits about as bright as the 4.5:1 bar allows at this hue. That has a consequence worth stating: **hover goes darker here**, unlike the brand button, which hovers lighter. There is nothing above `eco` a white label survives.
+
+`eco-deep` `#2f561f` is the scrim base under the band's white text — 7.01:1 against the lightest surface if it is ever used as text, though its real job is compositing, which the audit below covers.
+
+**This set has little margin left.** White text on the scrim is 4.98:1 against a 4.5:1 floor, and the band's icon ring is 3.33:1 against a 3:1 floor. Warming or lightening either again means recomputing the composites, not nudging the hex.
+
 ## Contrast Audit
 
 Ratios computed against WCAG 2.1: 4.5:1 normal text, 3:1 large text (≥24px, or ≥19px bold) and non-text UI.
@@ -64,6 +84,13 @@ Ratios computed against WCAG 2.1: 4.5:1 normal text, 3:1 large text (≥24px, or
 | `#33746f` support teal | `#ffffff` | 5.43 | pass | pass |
 | **`#33746f` support teal** | **`#f5e5ee` tint** | **4.48** | **fail** | pass |
 | `#790000` required red | `#ffffff` | 11.58 | pass | pass |
+| `#ffffff` | `#458018` eco | 4.82 | pass | pass |
+| `#ffffff` | `#3f7516` eco-strong | 5.57 | pass | pass |
+| `#ffffff` | `#59784c` eco-deep/80 over a white frame | 4.98 | pass | pass |
+| `#ffffff` | `#264519` eco-deep/80 over a black frame | 10.78 | pass | pass |
+| `#cdd6c9` white/70 ring | `#59784c` scrim, worst case | 3.33 | — | pass |
+| `#cdd6c9` white/70 ring | `#458018` eco pill | 3.23 | — | pass |
+| `#458018` eco pill | `#59784c` scrim, worst case | 1.03 | — | see note |
 | `#ffffff` | `#64254b` account tab bar | 11.01 | pass | pass |
 
 ### Findings
@@ -129,6 +156,9 @@ Proposed Tailwind theme tokens. Primitives above map to intent so components nev
 | `brand-deep` | `#64254b` | Links, button hover/active, emphasis |
 | `brand-tint` | `#f5e5ee` | Soft surfaces, notice panels, active input border |
 | `support` | `#33736e` | Help/contact block headings, contact pills |
+| `eco` | `#458018` | Promo-band button fill at rest, under a white label |
+| `eco-strong` | `#3f7516` | Same button on hover and active — deeper, not lighter |
+| `eco-deep` | `#2f561f` | Scrim base under white text on a photograph |
 | `critical` | `#790000` | Required-field markers, validation errors |
 | `ink` | `#323232` | Body text, dark nav, footer |
 | `ink-muted` | `#666666` | Secondary text, metadata |
@@ -136,6 +166,8 @@ Proposed Tailwind theme tokens. Primitives above map to intent so components nev
 | `surface-raised` | `#f7f8f9` | Cards, panels, inputs |
 | `surface-sunken` | `#f0f0f0` | Section bands |
 | `surface-header` | `#f2f2f2` | Topbar |
+
+The pill row is where warming the palette actually bit. `eco` and the scrim behind it now differ by **1.03:1** in luminance — the same brightness, separated only by hue, which is exactly the distinction a greyscale or low-vision reader does not get. Rather than leave the label to identify the control on its own (the position `AppHeroSlide`'s overlay button still occupies, A11Y-10), the pill was given a `white/70` ring: 3.33:1 against the scrim and 3.23:1 against the fill, so it clears 1.4.11 on both sides. The alternative — a fill bright enough to separate by luminance — takes the white label below 4.5:1 at this hue, which is the worse trade.
 
 Error state is defined above as `critical`. **Success and warning** still have no brand definition — the old site used WooCommerce plugin defaults (`#7ad03a`, `#ffba00`), both of which fail contrast badly and neither of which was chosen. They stay deferred to the first template that needs them.
 
