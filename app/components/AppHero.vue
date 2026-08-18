@@ -99,13 +99,31 @@ const motionLabel = computed(() => {
          is as tall as its tallest slide and crawlers see all of the content.
          Inactive slides are `invisible`, not `hidden`: visibility:hidden takes
          them out of the tab order and the accessibility tree just the same, but
-         still allows the cross-fade. -->
-    <div class="grid" :aria-live="liveMode">
+         still allows the cross-fade.
+
+         Only the incoming slide animates. It fades up on top while the outgoing
+         one holds at full opacity underneath, and the outgoing one's `opacity-0`
+         and `invisible` both land 500ms late — `duration-0 delay-500` — by which
+         time an opaque slide is already covering it.
+
+         Fading the pair against each other instead is what made the hero flash:
+         two half-transparent slides composite the page's own background through
+         them, and hiding the outgoing one outright (visibility is not animated by
+         `transition-opacity`) shows nothing but that background for the whole
+         500ms. The cost of holding it is that it stays in the accessibility tree
+         until the fade ends; nothing announces, because a live region's default
+         `aria-relevant` covers additions, not removals.
+
+         `isolate` keeps the active slide's `z-10` scoped to this grid, so it
+         stacks over its siblings without also covering the controls below. -->
+    <div class="isolate grid" :aria-live="liveMode">
       <div
         v-for="(slide, i) in slides"
         :key="slide.id"
-        class="col-start-1 row-start-1 transition-opacity duration-500 motion-reduce:transition-none"
-        :class="i === index ? 'opacity-100' : 'invisible opacity-0'"
+        class="col-start-1 row-start-1 motion-reduce:transition-none"
+        :class="i === index
+          ? 'z-10 opacity-100 transition-opacity duration-500'
+          : 'invisible opacity-0 transition-[opacity,visibility] delay-500 duration-0'"
         role="group"
         :aria-roledescription="t('hero.slide')"
         :aria-label="t('hero.slideOf', { index: i + 1, total: slides.length })"
