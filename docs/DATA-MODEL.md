@@ -19,6 +19,16 @@ Typed in `app/types/navigation.ts`, populated in `app/data/navigation.ts`.
 - `NavItem` carries optional `groups`, which is what makes an item open a mega-menu panel rather than link directly.
 - The same shape backs the footer columns, so one renderer serves both.
 
+## Popular Categories
+
+Typed in `app/types/category.ts`, populated in `app/data/categories.ts`. Backs the front page's "Populära kategorier" block.
+
+- A tile is `id`, `label`, `to`, `image` — no more. Array order is render order, so there is no `order` field that could disagree with it.
+- "Popular" is editorial, not computed. On the live site the block is hand-built, and it stays a curated list when the backend owns it; nothing here derives from sales.
+- `to` is a locale-agnostic path into the catalogue and is the only tie between a tile and the mega menu. Labels are deliberately allowed to differ — the front page shows "Mässbord" where the menu shows "Mässbord & diskar" — so `test/categories.test.ts` checks the path, not the wording, and accepts a path *below* a menu category (Ljuslådor sits under Displayer).
+- No alt text travels with the image. The tile always renders it `alt=""`, because the label is already the link's accessible name.
+- Renders are the Saved Page's own transparent PNGs in `public/categories/`, renamed after the category. They are square, which is what lets the tile state one intrinsic size for all ten; a test fails if one stops being square, or if a file is missing.
+
 ## Prices
 
 - The frontend never computes a price or a total. It formats amounts it was given — see Backend Boundaries in `PROJECT-PLAN.md`.

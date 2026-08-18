@@ -89,6 +89,21 @@ Motion is owned by `AppHero`, not by the slide: a slide cannot know it is one of
 
 Follows the APG carousel pattern: `aria-roledescription`, per-slide `role="group"` labelled "N of M", and a live region that is `off` while the timer runs and `polite` once it stops — a region that announces while it is also rotating talks over itself.
 
+### Popular categories
+
+`AppCategoryGrid.vue` is the block under the hero: "Populära kategorier", ten tiles, each a transparent product render on a light radial gradient with the category name beside it. Content is `app/data/categories.ts`; the shape is in `DATA-MODEL.md`.
+
+"Popular" is an editorial list, not a computed one — the live block is hand-built, and the backend inherits a curated list rather than a sales query. A tile is only `id`, `label`, `to`, `image`, and array order is render order.
+
+Four places the rebuild departs from the Saved Page, each on purpose:
+
+- **One link per tile.** The reference nests two anchors to the same URL in every cell, one around the render and one around the label, and several of the label anchors are empty — three tab stops per category, two of them with no accessible name. Here the tile is a single link named by its label, and the render is `alt=""`.
+- **A tablet step.** The reference goes straight from five columns to one at 768px, which leaves five 150px tiles fighting for label room in between. Two columns are inserted for that range.
+- **Every tile carries the `md` card radius**, rather than the reference's trick of rounding only the four outer corners of the block. That trick is a five-column assumption dressed as a style — the reference itself switches it off on mobile — and reproducing it needs an `overflow-hidden` that would clip the focus ring off every tile on an edge of the grid.
+- **The heading is an `h2`.** The reference uses `h3` with no `h2` above it.
+
+Labels are free to differ from the mega menu's — the front page shows "Mässbord" where the menu shows "Mässbord & diskar" — so the test pins the **path**, not the wording: every tile has to land on a category the menu carries, or below one. That is what catches a slug renamed in `navigation.ts` leaving a dead tile behind.
+
 ## Next
 
 Nothing is claimed for the main menu beyond the above. The remaining known queue, in order:

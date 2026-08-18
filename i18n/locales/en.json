@@ -32,6 +32,9 @@
     "videoTitle": "Video",
     "newTab": "(opens in a new tab)"
   },
+  "categories": {
+    "heading": "Popular categories"
+  },
   "search": {
     "label": "Search for products",
     "placeholder": "Search for products...",

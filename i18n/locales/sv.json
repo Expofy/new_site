@@ -32,6 +32,9 @@
     "videoTitle": "Video",
     "newTab": "(öppnas i ny flik)"
   },
+  "categories": {
+    "heading": "Populära kategorier"
+  },
   "search": {
     "label": "Sök efter produkter",
     "placeholder": "Sök efter produkter...",
