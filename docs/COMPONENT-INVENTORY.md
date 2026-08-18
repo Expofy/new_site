@@ -96,6 +96,8 @@ Not evidenced, listed in `DATA-MODEL.md`, build on demand: radio group, checkbox
 
 ## Content Blocks
 
+Blocks used by a single template live in a folder named for it — the front page's are in `app/components/front-page-blocks/`. `app/components/` proper holds global chrome and anything shared between pages. Names are unaffected: the components directory is registered with `pathPrefix: false`.
+
 - Hero carousel [REF]
 - Category navigation grid [REF] — built as `AppCategoryGrid.vue`, the front page's "Populära kategorier". Ten tiles, each a transparent product render on a light radial gradient with the category name beside it. Five across on desktop, two on tablet, one on mobile. One link per tile, whose name is the label; the render is `alt=""`. Content is `app/data/categories.ts`, images `public/categories/`.
 - Product grid and card row [REF]

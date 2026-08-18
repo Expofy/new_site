@@ -9,6 +9,14 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  // Subdirectories of components/ group files without renaming what they
+  // register. By default Nuxt prefixes a component with its path, so moving the
+  // front page's blocks into `front-page-blocks/` would have turned `AppHero`
+  // into `FrontPageBlocksAppHero` at every call site. The `App` prefix every
+  // component already carries is what keeps these names unique, so the path
+  // does not need to.
+  components: [{ path: '~/components', pathPrefix: false }],
+
   vite: {
     plugins: [tailwindcss()],
   },

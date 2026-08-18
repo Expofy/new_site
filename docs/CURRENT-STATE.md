@@ -49,6 +49,10 @@ Verified in headless Chrome at 1900px, 1024px (where columns wrap intact rather 
 
 ## In Progress — Front Page Blocks
 
+The blocks that only the front page uses live in `app/components/front-page-blocks/`. Everything in `app/components/` proper is either global chrome or shared across pages — the footer stack included, which closes all 14 Saved Pages and is mounted by the layout, not by the page.
+
+They keep their plain names. `nuxt.config.ts` sets `pathPrefix: false` on the components directory, so a subdirectory groups files without renaming what they register: `AppHero` stays `AppHero` rather than becoming `FrontPageBlocksAppHero`. The `App` prefix every component already carries is what keeps the names unique, so the path does not need to.
+
 ### Hero
 
 `AppHero.vue` picks a Slider Group and renders its lowest-`order` slide; `AppHeroSlide.vue` holds every setting. Types in `app/types/hero.ts` are modelled field-for-field on the "Add New Slide" admin screen, with the admin's own field name quoted on anything that was renamed, so connecting the backend is a mapping exercise rather than a translation.
