@@ -33,7 +33,9 @@
     "newTab": "(öppnas i ny flik)"
   },
   "categories": {
-    "heading": "Populära kategorier"
+    "heading": "Populära kategorier",
+    "subheading": "Hitta rätt produkter för mässa, event och butiksmiljö.",
+    "seeAll": "Visa alla kategorier"
   },
   "services": {
     "heading": "Tjänster",

@@ -33,7 +33,9 @@
     "newTab": "(opens in a new tab)"
   },
   "categories": {
-    "heading": "Popular categories"
+    "heading": "Popular categories",
+    "subheading": "Find the right products for trade fairs, events and retail spaces.",
+    "seeAll": "See all categories"
   },
   "services": {
     "heading": "Services",

@@ -30,6 +30,13 @@ describe('popular categories', () => {
       expect(category.label.en, category.id).toBeTruthy()
     }
   })
+
+  it('writes both locales for every description', () => {
+    for (const category of popularCategories) {
+      expect(category.description.sv, category.id).toBeTruthy()
+      expect(category.description.en, category.id).toBeTruthy()
+    }
+  })
 })
 
 /**

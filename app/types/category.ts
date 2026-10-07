@@ -17,6 +17,11 @@ export interface PopularCategory {
    * together, and what `test/categories.test.ts` checks.
    */
   label: Localized
+  /**
+   * One short line under the label — "Syns på långt avstånd." The tile clamps
+   * it to two lines, so it is a tagline, not a category description.
+   */
+  description: Localized
   /** Locale-agnostic path. The locale prefix is added by useLocalePath(). */
   to: string
   /**
