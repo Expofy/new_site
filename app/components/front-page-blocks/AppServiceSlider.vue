@@ -182,11 +182,10 @@ onBeforeUnmount(() => window.removeEventListener('resize', syncEdges))
                two-line one — and reserves both lines so losing the second does
                not shorten the card.
 
-               `support` is the site's help-and-service voice, which is the
-               right register for a block of services; `brand` stays with the
-               pieces that sell. -->
+               Bold `brand-strong` (4.50:1 worst case) so the grouping reads as
+               a label at this small size rather than fading into the card. -->
           <div class="mb-4">
-            <span class="line-clamp-2 min-h-[1.625rem] text-[0.625rem] font-medium uppercase leading-tight tracking-wider text-support">
+            <span class="line-clamp-2 min-h-[1.625rem] text-[0.625rem] font-bold uppercase leading-tight tracking-wider text-brand-strong">
               {{ text(service.eyebrow) }}
             </span>
           </div>
