@@ -30,6 +30,16 @@ const swatches = [
   <AppPromoBanner id="eco" />
   <AppServiceSlider :columns="5" />
 
+  <!-- "Smart val". The component is the panel and nothing else — no band, no
+       container, no gutter — so the page supplies both. That is what lets two
+       panels share a row: swap this wrapper for a two-column grid and each
+       copy stacks itself, because it switches form on its own width. -->
+  <div class="bg-surface-sunken py-section">
+    <div class="mx-auto max-w-site px-gutter">
+      <AppSmartChoice id="byt-duk" />
+    </div>
+  </div>
+
   <div class="mx-auto max-w-site px-4 py-12">
     <h1 class="text-h1 mb-2">{{ t('site.name') }}</h1>
     <p class="text-ink-muted mb-8">{{ t('site.tagline') }}</p>
