@@ -51,15 +51,16 @@ const icons: Record<PromoIcon, string> = {
     `--color-focus` flips to white for the same reason `.on-ink` does: this band
     is dark, and brand pink on it is 2.92:1, under the 3:1 non-text bar.
 
-    `mb-section` and no matching top margin: the band owns the gap to whatever
-    comes after it, because the block that does — `AppServiceSlider` — carries
-    `pb-section` only, on the assumption that the block above it ends in one.
-    That assumption holds for a white block and not for this one, whose padding
-    is inside the panel, so without this the cards would start against the
-    photograph's bottom edge. The gap *above* still comes from the block before,
-    which is the arrangement the rest of the page already runs on.
+    `my-section`: the band owns the gap on both sides. Below, because the block
+    after it — `AppServiceSlider` — carries `pb-section` only, on the
+    assumption that the block above it ends in one; that holds for a white
+    block and not for this one, whose padding is inside the panel, so without
+    it the cards would start against the photograph's bottom edge. Above,
+    because the block before — `AppCategoryGrid` — sits on a tinted surface,
+    and its own bottom padding reads as part of that surface, not as space
+    between the two.
   -->
-  <div v-if="banner" class="mx-auto mb-section max-w-site px-gutter">
+  <div v-if="banner" class="mx-auto my-section max-w-site px-gutter">
     <section
       class="relative isolate flex min-h-50 items-center overflow-hidden rounded-md bg-eco-deep [--color-focus:var(--color-surface)]"
       :aria-labelledby="`promo-${banner.id}-heading`"
