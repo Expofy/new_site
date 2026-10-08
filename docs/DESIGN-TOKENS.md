@@ -155,6 +155,7 @@ Proposed Tailwind theme tokens. Primitives above map to intent so components nev
 | `focus` | `#d63494` | Focus ring on light surfaces; `.on-ink` overrides to white |
 | `brand-deep` | `#64254b` | Links, button hover/active, emphasis |
 | `brand-tint` | `#f5e5ee` | Soft surfaces, notice panels, active input border |
+| `brand-on-ink` | `#e477b7` | Pink text and marks on the ink band (4.65:1). Never on light surfaces |
 | `support` | `#33736e` | Help/contact block headings, contact pills |
 | `eco` | `#458018` | Promo-band button fill at rest, under a white label |
 | `eco-strong` | `#3f7516` | Same button on hover and active — deeper, not lighter |

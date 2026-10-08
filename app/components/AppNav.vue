@@ -12,17 +12,50 @@ const text = useLocalizedText()
   <div class="on-ink hidden lg:block">
     <div class="mx-auto flex max-w-site items-center justify-between px-4">
       <NavigationMenuRoot :aria-label="t('nav.primary')">
-        <NavigationMenuList class="flex items-center gap-1">
-          <NavigationMenuItem v-for="item in mainNav" :key="item.id" :value="item.id">
+        <!-- Every top-level entry, trigger or link, turns `brand-on-ink` and
+             grows a `brand` bar along the band's bottom edge when hovered or
+             open. The bar is decorative — the label's colour already carries
+             the state, and `aria-expanded` carries it to assistive tech — so
+             `brand` at 2.92:1 is fine there, and it is the same pink as the
+             dropdown's top rule it runs into. -->
+        <NavigationMenuList class="flex items-center">
+          <NavigationMenuItem
+            v-for="item in mainNav"
+            :key="item.id"
+            :value="item.id"
+            :class="item.panel?.variant === 'dropdown' ? 'relative' : undefined"
+          >
             <template v-if="item.panel">
               <NavigationMenuTrigger
-                class="group flex cursor-pointer items-center gap-1 px-3 py-3 text-sm uppercase tracking-wide text-white hover:underline data-[state=open]:underline"
+                class="nav-entry group flex cursor-pointer items-center gap-2 data-[state=open]:text-brand-on-ink data-[state=open]:after:opacity-100"
               >
                 {{ text(item.label) }}
-                <svg class="size-3 transition-transform duration-150 group-data-[state=open]:rotate-180" viewBox="0 0 12 12" aria-hidden="true">
-                  <path d="M2 4.5 6 8.5l4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                <svg class="size-2.5" viewBox="0 0 10 10" aria-hidden="true">
+                  <path d="M1 2.5h8L5 8z" fill="currentColor" />
                 </svg>
               </NavigationMenuTrigger>
+
+              <!-- A dropdown hangs under its own trigger, its left edge on the
+                   label's (the trigger's `px-4`) so the pink rule continues the
+                   bar above it. The item is `relative` for this variant only;
+                   the mega panel below still measures from the list wrapper. -->
+              <NavigationMenuContent
+                v-if="item.panel.variant === 'dropdown'"
+                class="absolute left-4 top-full z-40 min-w-80 border-t-4 border-brand bg-surface px-10 py-5 text-ink shadow-lg [--color-focus:var(--color-brand)]"
+              >
+                <ul :aria-label="text(item.panel.heading)">
+                  <li v-for="link in item.panel.columns.flatMap(column => column.items)" :key="link.to">
+                    <NavigationMenuLink as-child>
+                      <NuxtLink
+                        :to="localePath(link.to)"
+                        class="block py-3 text-ink transition-colors hover:text-brand-strong"
+                      >
+                        {{ text(link.label) }}
+                      </NuxtLink>
+                    </NavigationMenuLink>
+                  </li>
+                </ul>
+              </NavigationMenuContent>
 
               <!-- reka-ui only teleports NavigationMenuContent when a
                    NavigationMenuViewport exists, and there is none here, so the
@@ -39,7 +72,8 @@ const text = useLocalizedText()
                    draw white-on-white, 1:1. It opts out of the band's focus
                    colour the same way it already opts out of its background. -->
               <NavigationMenuContent
-                class="absolute left-0 top-full z-40 w-[calc(min(var(--container-site),100vw)-2rem)] bg-surface text-ink shadow-lg [--color-focus:var(--color-brand)]"
+                v-else
+                class="absolute left-0 top-full z-40 w-[calc(min(var(--container-site),100vw)-2rem)] border-t-4 border-brand bg-surface text-ink shadow-lg [--color-focus:var(--color-brand)]"
               >
                 <div class="px-card py-card">
                   <div class="mb-8 flex flex-wrap items-baseline gap-x-8 gap-y-2">
@@ -127,7 +161,7 @@ const text = useLocalizedText()
             <NavigationMenuLink v-else as-child>
               <NuxtLink
                 :to="localePath(item.to!)"
-                class="block px-3 py-3 text-sm uppercase tracking-wide text-white hover:underline"
+                class="nav-entry block"
               >
                 {{ text(item.label) }}
               </NuxtLink>
@@ -138,7 +172,7 @@ const text = useLocalizedText()
 
       <NuxtLink
         :to="localePath('/account/orders')"
-        class="flex items-center gap-2 px-3 py-3 text-sm uppercase tracking-wide text-white hover:underline"
+        class="nav-entry flex items-center gap-2"
       >
         <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
           <circle cx="12" cy="8" r="3.5" />

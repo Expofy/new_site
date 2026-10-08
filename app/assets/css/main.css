@@ -16,6 +16,12 @@
   --color-brand-deep: #64254b;
   --color-brand-tint: #f5e5ee;
 
+  /* Pink on the ink band. `brand` there is 2.92:1 and `brand-strong` is darker
+   * still, so neither can be the active main-menu label; this is brand's own
+   * hue lightened until it clears 4.5:1 against ink (4.65:1). Ink band only —
+   * on white it is 2.6:1. */
+  --color-brand-on-ink: #e477b7;
+
   /* Focus ring. Light surfaces use brand (3.93:1 or better against every light
    * surface). Dark surfaces must override it — see .on-ink below — because
    * brand against ink is 2.92:1 and fails the 3:1 non-text bar. */
@@ -135,6 +141,45 @@
     background-color: var(--color-ink);
     color: var(--color-surface);
     --color-focus: var(--color-surface);
+  }
+
+  /* One top-level entry of the desktop main menu — a panel trigger, a plain
+   * link or Konto. Shared here because three different elements carry it and
+   * they have to read as one row. The `after` bar is hidden at rest; hover
+   * shows it, and the trigger's open state does the same from the markup.
+   * Being in `components`, any utility on the element wins over this.
+   *
+   * Type is the Saved Page's main menu verbatim: Outfit, 14px, regular weight,
+   * uppercase, no added tracking. */
+  .nav-entry {
+    position: relative;
+    padding: 1.25rem 1rem;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: var(--text-sm--line-height);
+    font-weight: 400;
+    text-transform: uppercase;
+    color: var(--color-surface);
+    transition: color 150ms;
+  }
+
+  .nav-entry::after {
+    content: "";
+    position: absolute;
+    inset-inline: 1rem;
+    bottom: 0;
+    height: 4px;
+    background-color: var(--color-brand);
+    opacity: 0;
+    transition: opacity 150ms;
+  }
+
+  .nav-entry:hover {
+    color: var(--color-brand-on-ink);
+  }
+
+  .nav-entry:hover::after {
+    opacity: 1;
   }
 
   /* Mega-menu panel grid. The column count is data rather than a class: a panel

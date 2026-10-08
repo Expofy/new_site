@@ -37,14 +37,6 @@ describe('navigation data', () => {
       expect(duplicates(links.map(link => link.to))).toEqual([])
     }
   })
-
-  it('allows the same path in different lists, as several use-case columns point at the same category', () => {
-    const retail = columns.find(column => column.id === 'use-cases-retail')?.items ?? []
-    const construction = columns.find(column => column.id === 'use-cases-construction')?.items ?? []
-
-    expect(retail.map(link => link.to)).toContain('/category/skyltar')
-    expect(construction.map(link => link.to)).toContain('/category/skyltar')
-  })
 })
 
 /**
@@ -87,11 +79,21 @@ describe('submenu variants', () => {
     }
   })
 
-  it('leaves list panels imageless, since the list renderer never draws a tile', () => {
-    for (const { panel } of panels.filter(({ panel }) => panel.variant === 'list')) {
+  it('leaves list and dropdown panels imageless, since neither renderer draws a tile', () => {
+    for (const { panel } of panels.filter(({ panel }) => panel.variant !== 'image')) {
       for (const link of panel.columns.flatMap(column => column.items)) {
         expect(link.image, link.to).toBeUndefined()
       }
+    }
+  })
+
+  it('gives a dropdown exactly one unheaded column, since it draws a single plain list', () => {
+    const dropdowns = panels.filter(({ panel }) => panel.variant === 'dropdown')
+    expect(dropdowns.length).toBeGreaterThan(0)
+
+    for (const { item, panel } of dropdowns) {
+      expect(panel.columns, item.id).toHaveLength(1)
+      expect(panel.columns[0]?.heading, item.id).toBeUndefined()
     }
   })
 

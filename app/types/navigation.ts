@@ -44,12 +44,15 @@ export interface NavColumn {
 }
 
 /**
- * The two submenu types.
+ * The three submenu types.
  *
- * - `image` — one tile per item: picture beside label, no column headings.
- * - `list`  — plain text links under a column heading, divided by a rule.
+ * - `image`    — one tile per item: picture beside label, no column headings.
+ * - `list`     — plain text links under a column heading, divided by a rule.
+ * - `dropdown` — a narrow panel hung under its own trigger rather than across
+ *   the site: one column of plain links, no heading shown. `heading` still
+ *   names the list for assistive tech and the mobile drawer.
  */
-export type NavPanelVariant = 'image' | 'list'
+export type NavPanelVariant = 'image' | 'list' | 'dropdown'
 
 export interface NavPanel {
   variant: NavPanelVariant

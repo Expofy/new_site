@@ -67,128 +67,68 @@ export const mainNav: NavItem[] = [
     },
   },
   {
-    id: 'use-cases',
-    label: { sv: 'Användningsområden', en: 'Use cases' },
-    to: '/landing/anvandningsomraden',
+    id: 'services',
+    label: { sv: 'Tjänster', en: 'Services' },
+    to: '/category/tjanster',
     panel: {
-      variant: 'list',
-      heading: { sv: 'Användningsområden', en: 'Use cases' },
+      variant: 'dropdown',
+      heading: { sv: 'Tjänster', en: 'Services' },
       columns: [
         {
-          id: 'use-cases-event',
-          heading: { label: { sv: 'Event & Mässa', en: 'Event & trade fair' }, to: '/landing/produkter-for-massa-event' },
+          id: 'services-all',
           items: [
-            { label: { sv: 'Vepor', en: 'Large-format banners' }, to: '/category/vepor' },
-            { label: { sv: 'Mässväggar', en: 'Trade fair walls' }, to: '/category/massvaggar' },
-            { label: { sv: 'Beachflaggor', en: 'Beach flags' }, to: '/category/beachflaggor' },
-            { label: { sv: 'Reklamtält', en: 'Promotional tents' }, to: '/category/reklamtalt' },
-            { label: { sv: 'Uppblåsbart', en: 'Inflatables' }, to: '/category/uppblasbart' },
-            { label: { sv: 'Godis', en: 'Sweets' }, to: '/category/godis' },
-          ],
-        },
-        {
-          id: 'use-cases-retail',
-          heading: { label: { sv: 'Butik & Kontor', en: 'Retail & office' }, to: '/landing/produkter-for-butik-kontor' },
-          items: [
-            { label: { sv: 'Skyltar', en: 'Signs' }, to: '/category/skyltar' },
-            { label: { sv: 'Folie & Dekaler', en: 'Film & decals' }, to: '/category/folie-dekaler' },
-            { label: { sv: 'Takdisplayer', en: 'Ceiling displays' }, to: '/category/takdisplayer' },
-            { label: { sv: 'Ramar & tavlor', en: 'Frames & pictures' }, to: '/category/ramar-tavlor' },
-            { label: { sv: 'Ljuslådor', en: 'Light boxes' }, to: '/category/ljuslador' },
-            { label: { sv: 'Gatupratare & trottoarpratare', en: 'A-boards & pavement signs' }, to: '/category/gatupratare' },
-          ],
-        },
-        {
-          id: 'use-cases-construction',
-          heading: { label: { sv: 'Bygg & Fastighet', en: 'Construction & property' }, to: '/landing/produkter-for-bygg-fastighet' },
-          items: [
-            { label: { sv: 'Banderoller', en: 'Banners' }, to: '/category/banderoller' },
-            { label: { sv: 'Skyltar', en: 'Signs' }, to: '/category/skyltar' },
-            { label: { sv: 'Folie & dekaler', en: 'Film & decals' }, to: '/category/folie-dekaler' },
-            { label: { sv: 'Reklamflaggor', en: 'Advertising flags' }, to: '/category/reklamflaggor' },
-            { label: { sv: 'Mattor', en: 'Mats' }, to: '/category/mattor' },
-            { label: { sv: 'Mäklarskyltar', en: 'Estate agent signs' }, to: '/category/maklarskyltar' },
-            { label: { sv: 'Skyddsprodukter', en: 'Protective products' }, to: '/category/skyddsprodukter' },
-          ],
-        },
-        {
-          // No `to`: the Saved Page leaves this heading unlinked, so it is a
-          // grouping label only. The renderer prints it as plain text.
-          id: 'use-cases-restaurant',
-          heading: { label: { sv: 'Restaurang & Inredning', en: 'Restaurant & interiors' } },
-          items: [
-            { label: { sv: 'Folie & dekaler', en: 'Film & decals' }, to: '/category/folie-dekaler' },
-            { label: { sv: 'Ramar & tavlor', en: 'Frames & pictures' }, to: '/category/ramar-tavlor' },
-            { label: { sv: 'Mattor', en: 'Mats' }, to: '/category/mattor' },
-            { label: { sv: 'Fototapeter', en: 'Photo wallpaper' }, to: '/category/fototapeter' },
-            { label: { sv: 'Affischer', en: 'Posters' }, to: '/category/affischer' },
-            { label: { sv: 'Parasoller', en: 'Parasols' }, to: '/category/parasoller' },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: 'how-it-works',
-    label: { sv: 'Hur funkar det?', en: 'How does it work?' },
-    to: '/blog',
-    panel: {
-      variant: 'list',
-      heading: { sv: 'Hur funkar det?', en: 'How does it work?' },
-      columns: [
-        {
-          id: 'how-it-works-ordering',
-          heading: { label: { sv: 'Beställning', en: 'Ordering' } },
-          items: [
-            { label: { sv: 'Så handlar du', en: 'How to order' }, to: '/blog/sa-handlar-du' },
-            { label: { sv: 'Så skapar du en tryckfil', en: 'Creating a print file' }, to: '/blog/tryckfil' },
-            { label: { sv: 'Så funkar designverktyget', en: 'Using the design tool' }, to: '/blog/designverktyget' },
-            { label: { sv: 'Ladda upp filer', en: 'Uploading files' }, to: '/blog/ladda-upp-filer' },
-          ],
-        },
-        {
-          id: 'how-it-works-techniques',
-          heading: { label: { sv: 'Tekniker & Behandlingar', en: 'Techniques & finishing' } },
-          items: [
-            { label: { sv: 'Trycktekniker', en: 'Printing techniques' }, to: '/blog/trycktekniker' },
-            { label: { sv: 'Efterbehandling', en: 'Finishing' }, to: '/blog/efterbehandling' },
-            { label: { sv: 'Material för vepor och banderoller', en: 'Materials for banners' }, to: '/blog/material-vepor' },
-          ],
-        },
-        {
-          id: 'how-it-works-learn',
-          heading: { label: { sv: 'Lär dig mer', en: 'Learn more' } },
-          items: [
-            { label: { sv: 'Tips & Trix', en: 'Tips & tricks' }, to: '/blog/tips-trix' },
-            { label: { sv: 'Om våra produkter', en: 'About our products' }, to: '/blog/vad-ar' },
-            { label: { sv: 'Kundcase för inspiration', en: 'Customer cases' }, to: '/showroom' },
-          ],
-        },
-        {
-          id: 'how-it-works-help',
-          heading: { label: { sv: 'Behöver du hjälp?', en: 'Need help?' } },
-          items: [
-            { label: { sv: 'Tjänster', en: 'Services' }, to: '/category/tjanster' },
+            { label: { sv: 'Projektledning', en: 'Project management' }, to: '/landing/projektledning-radgivning' },
+            { label: { sv: 'Montage & Montering', en: 'Assembly & installation' }, to: '/landing/montage-montering' },
             { label: { sv: 'Hjälp med original', en: 'Artwork help' }, to: '/landing/hjalp-original' },
-            { label: { sv: 'Montage och montering', en: 'Assembly & installation' }, to: '/landing/montage-montering' },
-            { label: { sv: 'Projektledning & Rådgivning', en: 'Project management & advice' }, to: '/landing/projektledning-radgivning' },
-            { label: { sv: 'Tryck och print', en: 'Printing' }, to: '/landing/tryck-print' },
-            { label: { sv: 'Vanliga frågor', en: 'FAQ' }, to: '/landing/fragor-och-svar' },
-            { label: { sv: 'Nyheter', en: 'News' }, to: '/blog/nyheter' },
-            { label: { sv: 'Kontakta oss', en: 'Contact us' }, to: '/landing/kontakta-oss' },
+            { label: { sv: 'Tryck & Print', en: 'Printing' }, to: '/landing/tryck-print' },
           ],
         },
       ],
     },
   },
   {
-    id: 'inspiration',
-    label: { sv: 'Inspiration', en: 'Inspiration' },
+    // Solutions are by setting, not by product. The landing paths are
+    // placeholders until the backend owns them.
+    id: 'solutions',
+    label: { sv: 'Lösningar', en: 'Solutions' },
+    to: '/landing/losningar',
+    panel: {
+      variant: 'dropdown',
+      heading: { sv: 'Lösningar', en: 'Solutions' },
+      columns: [
+        {
+          id: 'solutions-all',
+          items: [
+            { label: { sv: 'Mässor', en: 'Trade fairs' }, to: '/landing/massor' },
+            { label: { sv: 'Event & Fest', en: 'Events & parties' }, to: '/landing/event-fest' },
+            { label: { sv: 'Butik & Retail', en: 'Shops & retail' }, to: '/landing/butik-retail' },
+            { label: { sv: 'Kontor & Fastighet', en: 'Offices & property' }, to: '/landing/kontor-fastighet' },
+            { label: { sv: 'Byggprojekt', en: 'Construction projects' }, to: '/landing/byggprojekt' },
+            { label: { sv: 'Kampanj & Politik', en: 'Campaigns & politics' }, to: '/landing/kampanj-politik' },
+            { label: { sv: 'Horeca', en: 'Hospitality' }, to: '/landing/horeca' },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    id: 'cases',
+    label: { sv: 'Referenscase', en: 'Case studies' },
     to: '/showroom',
   },
   {
+    id: 'knowledge',
+    label: { sv: 'Kunskapsbank', en: 'Knowledge base' },
+    to: '/blog',
+  },
+  {
+    id: 'about',
+    label: { sv: 'Om Expofy', en: 'About Expofy' },
+    to: '/landing/om-oss',
+  },
+  {
     id: 'contact',
-    label: { sv: 'Kontakta oss', en: 'Contact us' },
+    label: { sv: 'Kontakt', en: 'Contact' },
     to: '/landing/kontakta-oss',
   },
 ]
