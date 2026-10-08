@@ -170,16 +170,18 @@ const text = useLocalizedText()
         </NavigationMenuList>
       </NavigationMenuRoot>
 
-      <NuxtLink
-        :to="localePath('/account/orders')"
-        class="nav-entry flex items-center gap-2"
-      >
-        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-          <circle cx="12" cy="8" r="3.5" />
-          <path d="M5 20a7 7 0 0 1 14 0" stroke-linecap="round" />
-        </svg>
-        {{ t('nav.account') }}
-      </NuxtLink>
+      <!-- The note shows on hover and on keyboard focus. It hangs below the
+           band: the button is centered in the 60px band, so mt-4 clears its
+           bottom edge. Visually hidden rather than display:none, so a screen
+           reader still reads it after the button. -->
+      <div class="group relative">
+        <AppQuoteRequest />
+        <p
+          class="pointer-events-none absolute right-0 top-full z-40 mt-4 whitespace-nowrap rounded-md bg-ink px-3 py-2 text-xs text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-has-[:focus-visible]:opacity-100"
+        >
+          {{ t('quote.submitNote') }}
+        </p>
+      </div>
     </div>
   </div>
 </template>

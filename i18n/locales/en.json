@@ -78,6 +78,31 @@
     "sent": "Thank you! Your message has been sent.",
     "required": "Required field"
   },
+  "quote": {
+    "open": "Request a quote",
+    "close": "Close",
+    "heading": "Get a quote on trade show products",
+    "name": "Name",
+    "company": "Company",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "street": "Street address",
+    "city": "City",
+    "postcode": "Postcode",
+    "area": "Choose area ...",
+    "areaRequired": "Choose at least one area.",
+    "areas": {
+      "design": "Graphic design",
+      "advice": "Advice & product selection",
+      "largeOrder": "Quote for a larger order",
+      "installation": "Assembly & installation"
+    },
+    "message": "What would you like help with?",
+    "submit": "Send",
+    "submitNote": "Get a tailored proposal – quick and easy",
+    "sent": "Thank you! Your quote request has been sent."
+  },
   "footer": {
     "customerService": "Customer service",
     "phoneHours": "Phone hours",

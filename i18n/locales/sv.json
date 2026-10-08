@@ -78,6 +78,31 @@
     "sent": "Tack! Ditt meddelande har skickats.",
     "required": "Obligatoriskt fält"
   },
+  "quote": {
+    "open": "Begär offert",
+    "close": "Stäng",
+    "heading": "Få en offert på mässprodukter",
+    "name": "Namn",
+    "company": "Företag",
+    "email": "Email",
+    "phone": "Telefon",
+    "address": "Adress",
+    "street": "Gatuadress",
+    "city": "Stad",
+    "postcode": "Postnummer",
+    "area": "Välj område ...",
+    "areaRequired": "Välj minst ett område.",
+    "areas": {
+      "design": "Grafisk formgivning",
+      "advice": "Rådgivning & produktval",
+      "largeOrder": "Offert vid större beställning",
+      "installation": "Montering & installation"
+    },
+    "message": "Vad önskar du hjälp med?",
+    "submit": "Skicka",
+    "submitNote": "Få ett skräddarsytt förslag – snabbt och enkelt",
+    "sent": "Tack! Din offertförfrågan har skickats."
+  },
   "footer": {
     "customerService": "Kundtjänst",
     "phoneHours": "Telefontid",

@@ -1,3 +1,8 @@
+<script setup lang="ts">
+const { t } = useI18n()
+const localePath = useLocalePath()
+</script>
+
 <template>
   <header>
     <div class="bg-surface-header">
@@ -12,7 +17,23 @@
           <AppLogo />
         </div>
 
-        <div class="order-2 ml-auto flex items-center gap-3 md:order-3 md:ml-0 md:flex-1 md:justify-end">
+        <div class="order-2 ml-auto flex items-center gap-2 sm:gap-6 md:order-3 md:ml-0 md:flex-1 md:justify-end">
+          <!-- From lg the nav band carries the quote button, so the header
+               shows the account link in its place. Below lg the band is
+               hidden and the drawer holds the account link instead. -->
+          <div class="lg:hidden">
+            <AppQuoteRequest />
+          </div>
+          <NuxtLink
+            :to="localePath('/account/orders')"
+            class="hidden items-center gap-2 font-medium text-ink lg:flex"
+          >
+            <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <circle cx="12" cy="8" r="3.5" />
+              <path d="M5 20a7 7 0 0 1 14 0" stroke-linecap="round" />
+            </svg>
+            {{ t('nav.account') }}
+          </NuxtLink>
           <AppCartSummary />
           <AppMobileDrawer />
         </div>
