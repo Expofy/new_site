@@ -28,6 +28,7 @@ export const smartChoiceBlocks: SmartChoiceBlock[] = [
       { id: 'cost', icon: 'tag', label: { sv: 'Lägre kostnad vid uppdatering', en: 'Lower cost when you update' } },
     ],
     annotation: { sv: 'Byt duk – samma stomme', en: 'Change the fabric – same frame' },
+    campaign: { sv: 'Säsongskampanj', en: 'Seasonal campaign' },
     /**
      * Season names, not slugs, so the files are named in English while the
      * labels are localised — a departure from `public/categories/`, whose
@@ -35,12 +36,39 @@ export const smartChoiceBlocks: SmartChoiceBlock[] = [
      * `host.jpg` for "höst" would read as the English word in every import.
      */
     swatches: [
-      { id: 'spring', label: { sv: 'Vår', en: 'Spring' }, image: '/smart-choice/spring.jpg' },
-      { id: 'summer', label: { sv: 'Sommar', en: 'Summer' }, image: '/smart-choice/summer.jpg' },
-      { id: 'autumn', label: { sv: 'Höst', en: 'Autumn' }, image: '/smart-choice/autumn.jpg' },
-      { id: 'winter', label: { sv: 'Vinter', en: 'Winter' }, image: '/smart-choice/winter.jpg' },
+      {
+        id: 'spring',
+        label: { sv: 'Vår', en: 'Spring' },
+        image: '/smart-choice/spring.jpg',
+        display: '/smart-choice/spring-display.jpg',
+        tagline: { sv: 'Ny energi. Större möjligheter.', en: 'New energy. Bigger possibilities.' },
+        accent: '#56684a',
+      },
+      {
+        id: 'summer',
+        label: { sv: 'Sommar', en: 'Summer' },
+        image: '/smart-choice/summer.jpg',
+        display: '/smart-choice/summer-display.jpg',
+        tagline: { sv: 'Mer ljus. Större upplevelser.', en: 'More light. Bigger experiences.' },
+        accent: '#1f3f5b',
+      },
+      {
+        id: 'autumn',
+        label: { sv: 'Höst', en: 'Autumn' },
+        image: '/smart-choice/autumn.jpg',
+        display: '/smart-choice/autumn-display.jpg',
+        tagline: { sv: 'Varma färger. Större möjligheter.', en: 'Warm colours. Bigger possibilities.' },
+        accent: '#9a3a12',
+      },
+      {
+        id: 'winter',
+        label: { sv: 'Vinter', en: 'Winter' },
+        image: '/smart-choice/winter.jpg',
+        display: '/smart-choice/winter-display.jpg',
+        tagline: { sv: 'Klarare dagar. Större upplevelser.', en: 'Clearer days. Bigger experiences.' },
+        accent: '#3b5878',
+      },
     ],
-    image: '/smart-choice/frame-and-flags.jpg',
     buttons: {
       primary: { label: { sv: 'Se produkterna', en: 'See the products' }, to: '/category/beachflaggor' },
       secondary: { label: { sv: 'Få hjälp att välja', en: 'Get help choosing' }, to: '/landing/kontakta-oss' },

@@ -9,6 +9,21 @@ const text = useLocalizedText()
 
 const block = computed(() => smartChoiceBlock(props.id))
 
+/** Which print is on the display. The first, until someone picks another. */
+const active = ref(0)
+watch(() => props.id, () => { active.value = 0 })
+
+/**
+ * Where the swap mark sits: level with the middle of the picked
+ * swatch. The column is `n` equal rows with `gap-3` between them, so row `i`'s
+ * middle is `(i + ½)` pitches down, less half a gap, where a pitch is
+ * `(height + gap) / n`.
+ */
+const swapMarkTop = computed(() => {
+  const count = block.value?.swatches.length ?? 1
+  return `calc((100% + 0.75rem) * ${active.value + 0.5} / ${count} - 0.375rem)`
+})
+
 /**
  * Feature marks, spelled out rather than fetched. `stroke` shapes so they
  * inherit `currentColor`, the same idiom as every other icon on the front page.
@@ -36,8 +51,8 @@ const icons: Record<SmartChoiceIcon, string> = {
 
     56rem (896px) is where the two-column form stops working rather than a
     round number: the text column needs ~26rem before the headline breaks to
-    three lines and the two CTAs stop sharing a row, and the visual needs ~28rem
-    before the frame photograph is smaller than the swatches beside it.
+    three lines and the two CTAs stop sharing a row. The visual adapts on its own
+    width below that — see the note on its container.
   -->
   <section
     v-if="block"
@@ -57,18 +72,22 @@ const icons: Record<SmartChoiceIcon, string> = {
         </p>
 
         <!-- `h2`, like every other front-page block, so this is a sibling of
-             "Populära kategorier" rather than a level below it. `text-h1` is
-             the size: the design draws this at ~62px, which is half again the
-             42px the scale tops out at, and the scale wins — see the note in
-             DESIGN-TOKENS.md. -->
+             "Populära kategorier" rather than a level below it — and `text-h2`
+             for the same reason: a block heading drawn a step larger than its
+             neighbours' reads as the page's headline. The design draws it at
+             ~62px; the scale wins — see the note in DESIGN-TOKENS.md.
+
+             The lead is `text-lg`, the size the subheading under "Populära
+             kategorier" uses. Semibold and in full ink rather than muted,
+             because here it is the offer itself, not a caption. -->
         <h2
           :id="`smart-${block.id}-heading`"
-          class="mt-stack text-h1 font-semibold text-balance"
+          class="mt-stack text-h2 font-semibold text-balance"
         >
           {{ text(block.headline) }}
         </h2>
 
-        <p class="mt-stack text-h4 font-semibold text-ink">{{ text(block.lead) }}</p>
+        <p class="mt-2 text-lg font-semibold text-ink">{{ text(block.lead) }}</p>
         <p class="mt-4 max-w-prose text-ink-muted">{{ text(block.text) }}</p>
 
         <!-- A list, not three stacked divs: it is a set of three claims and the
@@ -117,11 +136,17 @@ const icons: Record<SmartChoiceIcon, string> = {
       </div>
 
       <!-- ── The idea, in a picture ────────────────────────────────────── -->
-      <!-- Assembled from parts rather than dropped in as one exported image,
-           for one reason that outranks the extra markup: the swatch labels are
-           words. "Vår" has to be able to say "Spring", and a label baked into a
-           JPEG cannot. -->
-      <div>
+      <!-- Assembled from parts rather than dropped in as exported images, for
+           one reason that outranks the extra markup: every word in it — the
+           swatch labels, the season's title and tagline — is text. "Vår" has
+           to be able to say "Spring", and a word baked into a JPEG cannot.
+
+           A container of its own, because whether the swatches can stand in a
+           column beside the display depends on this column's width, not the
+           panel's: below 34rem the display would be narrower than the swatches,
+           so they go into a two-by-two block above it instead. Two, not four
+           across: four thumbnails at phone width leave "Sommar" no room. -->
+      <div class="@container/visual">
         <p class="mb-2 flex items-end gap-2 text-sm font-medium italic text-brand-strong">
           {{ text(block.annotation) }}
           <!-- The mockup draws this arrow by hand. Outfit is the only family
@@ -133,43 +158,99 @@ const icons: Record<SmartChoiceIcon, string> = {
           </svg>
         </p>
 
-        <div class="flex items-stretch gap-3">
-          <!-- The prints that change. `ul` for the same reason as the features:
-               a set with a count. -->
-          <ul class="grid shrink-0 basis-40 gap-3">
-            <li v-for="swatch in block.swatches" :key="swatch.id" class="relative overflow-hidden rounded-md">
-              <img :src="swatch.image" alt="" loading="lazy" class="aspect-2/1 size-full object-cover">
-              <!-- A chip, where the design sets the word straight on the photo.
-                   Behind it is a picture nobody has measured, and this is the
-                   cheapest way to make the label's contrast knowable: `ink` on
-                   `surface/90` is 10.4:1 over a black frame and 12.82:1 over a
-                   white one, so it reads whatever the season looks like. -->
-              <span class="absolute bottom-1.5 right-1.5 rounded-sm bg-surface/90 px-1.5 py-0.5 text-xs font-semibold text-ink">
-                {{ text(swatch.label) }}
-              </span>
+        <div class="flex flex-col gap-3 @min-[34rem]/visual:flex-row @min-[34rem]/visual:items-stretch">
+          <!-- The prints that change, and the control that changes them. Still
+               a `ul` — a set with a count — of toggle buttons: `aria-pressed`
+               says which print is on the display, and `aria-controls` says
+               where. The list is named by the annotation it sits under. -->
+          <ul
+            class="grid grid-cols-2 gap-3 @min-[34rem]/visual:shrink-0 @min-[34rem]/visual:basis-36 @min-[34rem]/visual:grid-cols-1"
+            :aria-label="text(block.annotation)"
+          >
+            <li v-for="(swatch, i) in block.swatches" :key="swatch.id">
+              <!-- The pick is a 2px `brand` ring 2px out — 4.40:1 on the white
+                   panel, past 1.4.11's 3:1 — and `aria-pressed`, so it is not
+                   colour alone. Focus is pushed 4px out to sit just outside
+                   that ring rather than on top of it: both are `brand`. -->
+              <button
+                type="button"
+                class="relative block size-full cursor-pointer overflow-hidden rounded-md ring-offset-2 transition-shadow focus-visible:outline-offset-4"
+                :class="i === active ? 'ring-2 ring-brand' : 'hover:ring-2 hover:ring-brand/40'"
+                :aria-pressed="i === active"
+                :aria-controls="`smart-${block.id}-display`"
+                @click="active = i"
+              >
+                <img :src="swatch.image" alt="" loading="lazy" class="block aspect-2/1 size-full object-cover">
+                <!-- A chip, where the design sets the word straight on the
+                     photo. Behind it is a picture nobody has measured, and this
+                     is the cheapest way to make the label's contrast knowable:
+                     `ink` on `surface/90` is 10.4:1 over a black frame and
+                     12.82:1 over a white one, so it reads whatever the season
+                     looks like. -->
+                <span class="absolute bottom-1.5 right-1.5 rounded-sm bg-surface/90 px-1.5 py-0.5 text-xs font-semibold text-ink">
+                  {{ text(swatch.label) }}
+                </span>
+              </button>
             </li>
           </ul>
 
-          <!-- The bracket tying the four prints to the one frame, and the swap
-               mark on it. Decoration: the annotation above and the copy on the
-               left both already say it in words. -->
-          <div class="relative flex w-8 shrink-0 items-center" aria-hidden="true">
-            <span class="absolute inset-y-4 left-0 w-4 rounded-l-full border-y border-l border-brand" />
-            <span class="relative ml-1 grid size-8 place-items-center rounded-full bg-brand-strong text-white">
+          <!-- The swap mark, which slides to whichever print is up. Decoration:
+               the annotation and the pressed button both already say it. Column
+               form only — in a row it would have nothing to sit level with. -->
+          <div class="relative hidden w-8 shrink-0 @min-[34rem]/visual:block" aria-hidden="true">
+            <span
+              class="absolute left-0 grid size-8 -translate-y-1/2 place-items-center rounded-full bg-brand-strong text-white transition-[top] duration-300 motion-reduce:transition-none"
+              :style="{ top: swapMarkTop }"
+            >
               <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M4 9h14l-3.5-3.5M20 15H6l3.5 3.5" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </span>
           </div>
 
-          <!-- The frame that stays. Decorative — see the note on `image` in
+          <!-- The display. One layer per season, stacked in one grid cell and
+               cross-faded the way the hero is — see AppHero.vue for why only
+               the incoming layer animates and the outgoing one holds. Inactive
+               layers are `invisible`, so only the season on show is in the
+               accessibility tree.
+
+               Each layer is the season's photograph of the frame and flags,
+               with the title and tagline as text on the empty wall above them.
+               They are placed in percentages of the photograph and sized in
+               `cqw` of it, so they stay on the wall at any width: a picture
+               scales as one piece, and fixed type would sit right at one width
+               only. The positions belong to the photographs — see `display` in
                ~/types/smart-choice.ts. -->
-          <img
-            :src="block.image"
-            alt=""
-            loading="lazy"
-            class="min-w-0 flex-1 rounded-md object-contain object-bottom"
+          <div
+            :id="`smart-${block.id}-display`"
+            class="@container/display isolate grid min-w-0 flex-1 overflow-hidden rounded-md bg-surface-raised"
           >
+            <div
+              v-for="(swatch, i) in block.swatches"
+              :key="swatch.id"
+              class="relative col-start-1 row-start-1 motion-reduce:transition-none"
+              :class="i === active
+                ? 'z-10 opacity-100 transition-opacity duration-500'
+                : 'invisible opacity-0 transition-[opacity,visibility] delay-500 duration-0'"
+            >
+              <img :src="swatch.display" alt="" width="1000" height="1000" loading="lazy" class="block h-auto w-full">
+
+              <!-- On the empty wall above the display. `ink-muted` is 4.69:1
+                   on its darkest pixel, and each `accent` is held to 4.5:1 on
+                   it by the tests. The floor on the small lines keeps them from
+                   going under 9px in a narrow column, and the whole stack has
+                   to end above the tallest piece of the display, which starts at
+                   ~22% — which is why the
+                   title is smaller than the design's, and why the spacing
+                   tightens on a phone, where the 9px floor would otherwise
+                   wrap the tagline onto the frame. -->
+              <div class="absolute left-[5.2%] top-[3%] right-[5%]">
+                <p class="text-[max(0.5625rem,1.5cqw)] leading-[1.2] uppercase tracking-[0.3em] text-ink-muted @max-[24rem]/display:tracking-[0.12em]">{{ text(block.campaign) }}</p>
+                <p class="mt-[0.4cqw] text-[10.5cqw] leading-none font-medium" :style="{ color: swatch.accent }">{{ text(swatch.label) }}</p>
+                <p class="mt-[1.4cqw] text-[max(0.5625rem,1.5cqw)] leading-[1.2] uppercase tracking-[0.25em] text-ink-muted @max-[24rem]/display:tracking-[0.12em]">{{ text(swatch.tagline) }}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

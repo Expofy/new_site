@@ -32,16 +32,39 @@ export interface SmartChoiceFeature {
 }
 
 /**
- * One interchangeable print in the swatch column — the thing the panel is
- * actually about, since the whole pitch is that these change and the frame
- * does not.
+ * One interchangeable print — the thing the panel is actually about, since the
+ * whole pitch is that these change and the frame does not. Each is a thumbnail
+ * in the swatch column and, when picked, the display beside it.
  */
 export interface SmartChoiceSwatch {
   id: string
-  /** Rendered as real text over the image, never baked into it — the site is
-   *  bilingual, and "Vår" has to be able to say "Spring". */
+  /**
+   * Rendered as real text over the image, never baked into it — the site is
+   * bilingual, and "Vår" has to be able to say "Spring". Also the big title
+   * over the display, which in the design is always the same word.
+   */
   label: Localized
+  /** The thumbnail in the swatch column, in `public/smart-choice/`. */
   image: string
+  /**
+   * The display — the wall, flag and counter — wearing this print, shown
+   * beside the swatches when it is picked. A photograph with no words on it:
+   * the title and tagline are text laid over it from `label` and `tagline`,
+   * so they translate. They are placed by percentages measured against this
+   * composition, so a new file has to keep it — empty wall across the top
+   * ~22%, the display below. The current files are square, with the picture
+   * moved down 165px of the 1254px render and the clean wall above it mirrored into the gap:
+   * as rendered, the flag started at ~12%, under the tagline.
+   */
+  display: string
+  /** The spaced-out line under the season's title. */
+  tagline: Localized
+  /**
+   * The season's own colour for its title. Content rather than a brand token:
+   * it belongs to the photograph it was picked against. Held to 4.5:1 on the display's wall by
+   * test/smart-choice.test.ts.
+   */
+  accent: string
 }
 
 export interface SmartChoiceBlock {
@@ -56,13 +79,9 @@ export interface SmartChoiceBlock {
   features: SmartChoiceFeature[]
   /** The handwritten-looking aside pointing at the swatches. */
   annotation: Localized
+  /** The small spaced-out line over the display — "SÄSONGSKAMPANJ". */
+  campaign: Localized
   swatches: SmartChoiceSwatch[]
-  /**
-   * The product photograph beside the swatches, in `public/smart-choice/`.
-   * Decorative: the panel's message is its text, and the picture shows the
-   * same frame the copy is describing.
-   */
-  image: string
   /**
    * Both or neither for `secondary`. The primary sells, the secondary offers
    * help — the two voices the site already has.
