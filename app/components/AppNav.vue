@@ -36,12 +36,12 @@ const text = useLocalizedText()
               </NavigationMenuTrigger>
 
               <!-- A dropdown hangs under its own trigger, its left edge on the
-                   label's (the trigger's `px-4`) so the pink rule continues the
+                   label's (the trigger's `--nav-entry-x`) so the pink rule continues the
                    bar above it. The item is `relative` for this variant only;
                    the mega panel below still measures from the list wrapper. -->
               <NavigationMenuContent
                 v-if="item.panel.variant === 'dropdown'"
-                class="absolute left-4 top-full z-40 min-w-80 border-t-4 border-brand bg-surface px-10 py-5 text-ink shadow-lg [--color-focus:var(--color-brand)]"
+                class="absolute left-(--nav-entry-x) top-full z-40 min-w-80 border-t-4 border-brand bg-surface px-10 py-5 text-ink shadow-lg [--color-focus:var(--color-brand)]"
               >
                 <ul :aria-label="text(item.panel.heading)">
                   <li v-for="link in item.panel.columns.flatMap(column => column.items)" :key="link.to">

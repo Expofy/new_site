@@ -152,6 +152,22 @@
     --color-focus: var(--color-surface);
   }
 
+  /* An entry's side padding, which is also the inset of its hover bar and of
+   * the dropdown hung under it. 1rem as on the Saved Page, but only from
+   * 1280px: at 1024px the seven entries under WCAG 1.4.12 text spacing push
+   * "Begär offert" 129px past the band's edge and the page scrolls sideways.
+   * 6px per side takes back 140px. From 1280px the full padding fits under the
+   * same overrides. */
+  :root {
+    --nav-entry-x: 0.375rem;
+  }
+
+  @media (width >= 80rem) {
+    :root {
+      --nav-entry-x: 1rem;
+    }
+  }
+
   /* One top-level entry of the desktop main menu — a panel trigger, a plain
    * link or Konto. Shared here because three different elements carry it and
    * they have to read as one row. The `after` bar is hidden at rest; hover
@@ -162,7 +178,7 @@
    * uppercase, no added tracking. */
   .nav-entry {
     position: relative;
-    padding: 1.25rem 1rem;
+    padding: 1.25rem var(--nav-entry-x);
     font-family: var(--font-sans);
     font-size: 14px;
     line-height: var(--text-sm--line-height);
@@ -175,7 +191,7 @@
   .nav-entry::after {
     content: "";
     position: absolute;
-    inset-inline: 1rem;
+    inset-inline: var(--nav-entry-x);
     bottom: 0;
     height: 4px;
     background-color: var(--color-brand);
