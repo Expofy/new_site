@@ -26,7 +26,7 @@ const text = useLocalizedText()
 
         <NuxtLink
           :to="localePath('/category')"
-          class="group inline-flex shrink-0 items-center gap-2 rounded-full bg-brand-strong px-6 py-3 font-medium text-white transition-colors hover:bg-brand active:brightness-90"
+          class="group inline-flex shrink-0 items-center gap-2 rounded-full bg-brand-strong px-6 py-3 font-medium text-white transition-colors hover:bg-brand-deep active:brightness-90"
         >
           {{ t('categories.seeAll') }}
           <svg class="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transform-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">

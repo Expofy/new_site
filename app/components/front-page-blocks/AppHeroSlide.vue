@@ -188,7 +188,7 @@ watch(() => props.active && props.motion, (mayPlay) => {
       <NuxtLink
         v-if="overlay.button"
         :to="localePath(overlay.button.to)"
-        class="mt-2 inline-flex items-center rounded-full bg-brand-strong px-6 py-3 font-medium text-white transition-colors hover:bg-brand active:brightness-90"
+        class="mt-2 inline-flex items-center rounded-full bg-brand-strong px-6 py-3 font-medium text-white transition-colors hover:bg-brand-deep active:brightness-90"
       >
         {{ text(overlay.button.label) }}
       </NuxtLink>
