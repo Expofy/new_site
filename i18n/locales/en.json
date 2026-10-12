@@ -46,6 +46,11 @@
     "subheading": "Discover our latest products for trade fairs, events and retail.",
     "seeAll": "See all new arrivals"
   },
+  "showroomTeaser": {
+    "heading": "Our latest work",
+    "subheading": "We help companies and organisations create strong experiences – from idea to finished solution.",
+    "seeAll": "See more reference cases"
+  },
   "search": {
     "label": "Search for products",
     "placeholder": "Search for products...",

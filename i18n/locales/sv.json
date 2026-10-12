@@ -46,6 +46,11 @@
     "subheading": "Upptäck våra senaste produkter för mässa, event och butik.",
     "seeAll": "Visa alla nyheter"
   },
+  "showroomTeaser": {
+    "heading": "Våra senaste arbeten",
+    "subheading": "Vi hjälper företag och organisationer att skapa starka upplevelser – från idé till färdig lösning.",
+    "seeAll": "Se fler referenscase"
+  },
   "search": {
     "label": "Sök efter produkter",
     "placeholder": "Sök efter produkter...",
