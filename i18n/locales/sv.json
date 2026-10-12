@@ -41,6 +41,11 @@
     "heading": "Tjänster",
     "readMore": "Läs mer"
   },
+  "news": {
+    "heading": "Nyheter",
+    "subheading": "Upptäck våra senaste produkter för mässa, event och butik.",
+    "seeAll": "Visa alla nyheter"
+  },
   "search": {
     "label": "Sök efter produkter",
     "placeholder": "Sök efter produkter...",

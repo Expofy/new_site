@@ -41,6 +41,11 @@
     "heading": "Services",
     "readMore": "Read more"
   },
+  "news": {
+    "heading": "New arrivals",
+    "subheading": "Discover our latest products for trade fairs, events and retail.",
+    "seeAll": "See all new arrivals"
+  },
   "search": {
     "label": "Search for products",
     "placeholder": "Search for products...",
