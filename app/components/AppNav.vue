@@ -9,7 +9,7 @@ const text = useLocalizedText()
 <template>
   <!-- .on-ink flips the focus ring to white; brand pink is 2.92:1 here and
        fails the 3:1 non-text bar. See docs/DESIGN-TOKENS.md. -->
-  <div class="on-ink hidden lg:block">
+  <div class="on-ink sticky top-0 z-30 hidden lg:block">
     <div class="mx-auto flex max-w-site items-center justify-between px-4">
       <NavigationMenuRoot :aria-label="t('nav.primary')">
         <!-- Every top-level entry, trigger or link, turns `brand-on-ink` and

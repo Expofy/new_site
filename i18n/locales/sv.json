@@ -103,6 +103,20 @@
     "submitNote": "Få ett skräddarsytt förslag – snabbt och enkelt",
     "sent": "Tack! Din offertförfrågan har skickats."
   },
+  "topBar": {
+    "delivery": {
+      "title": "Snabb leverans",
+      "text": "till hela Sverige"
+    },
+    "quality": {
+      "title": "Hög kvalitet",
+      "text": "för professionellt resultat"
+    },
+    "experts": {
+      "title": "B2B-specialist",
+      "text": "Offert, rådgivning och projektstöd"
+    }
+  },
   "footer": {
     "customerService": "Kundtjänst",
     "phoneHours": "Telefontid",

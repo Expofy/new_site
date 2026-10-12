@@ -103,6 +103,20 @@
     "submitNote": "Get a tailored proposal – quick and easy",
     "sent": "Thank you! Your quote request has been sent."
   },
+  "topBar": {
+    "delivery": {
+      "title": "Fast delivery",
+      "text": "across Sweden"
+    },
+    "quality": {
+      "title": "High quality",
+      "text": "for professional results"
+    },
+    "experts": {
+      "title": "B2B specialist",
+      "text": "Quotes, advice and project support"
+    }
+  },
   "footer": {
     "customerService": "Customer service",
     "phoneHours": "Phone hours",

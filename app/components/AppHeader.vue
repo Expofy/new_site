@@ -5,6 +5,8 @@ const localePath = useLocalePath()
 
 <template>
   <header>
+    <AppTopBar />
+
     <div class="bg-surface-header">
       <!-- One search field, repositioned by flex order: inline on desktop,
            wrapped onto its own row on mobile. Rendering it twice would
@@ -43,7 +45,5 @@ const localePath = useLocalePath()
         </div>
       </div>
     </div>
-
-    <AppNav />
   </header>
 </template>

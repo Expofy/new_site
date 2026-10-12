@@ -131,6 +131,15 @@
     outline: 2px solid var(--color-focus);
     outline-offset: 2px;
   }
+
+  /* From lg the nav band is sticky. Scrolling to an anchor, or tabbing back up
+   * to a control, stops this far short of the top so the 60px band does not
+   * cover it (WCAG 2.4.11). */
+  @media (min-width: 64rem) {
+    html {
+      scroll-padding-top: 4.5rem;
+    }
+  }
 }
 
 @layer components {
