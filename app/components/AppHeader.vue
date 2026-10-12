@@ -13,8 +13,11 @@ const localePath = useLocalePath()
            duplicate its id, its label target and the search landmark. -->
       <!-- On desktop the logo and the actions each take an equal share, which is
            what centers the search field between them regardless of how wide
-           either side happens to be. Below md the search drops to its own row. -->
-      <div class="mx-auto flex max-w-site flex-wrap items-center gap-stack px-gutter py-stack">
+           either side happens to be. Below md the search drops to its own row.
+           Below 360px the logo and the actions (296px at full size) outgrow
+           the 280px a 320px phone leaves, and the actions wrap under the logo:
+           there the gap narrows to 12px and the logo to 40px tall (AppLogo). -->
+      <div class="mx-auto flex max-w-site flex-wrap items-center gap-stack px-gutter py-stack max-[22.5rem]:gap-x-3">
         <div class="order-1 md:flex-1">
           <AppLogo />
         </div>

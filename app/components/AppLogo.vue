@@ -21,7 +21,7 @@ const asset = computed(() =>
     <img
       :src="asset.src"
       :alt="t('site.name')"
-      class="h-12 w-auto md:h-16"
+      class="h-12 w-auto max-[22.5rem]:h-10 md:h-16"
       :width="asset.width"
       :height="asset.height"
     >
