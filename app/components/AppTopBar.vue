@@ -34,11 +34,14 @@ const promises = [
 <template>
   <!-- Below lg only the bold titles show, smaller and without dividers, so the
        three fit a 360px phone; on anything narrower they wrap rather than
-       scroll. The full lines need about 950px, which only lg guarantees. -->
+       scroll. The full lines need 928px with `px-4` between items, and a
+       1024px viewport leaves the row 944px; `px-6` would need 960, so it waits
+       for xl. The row may still wrap at lg: with WCAG 1.4.12 text spacing it
+       needs ~1160px, and nowrap would scroll the page sideways. -->
   <div class="bg-surface">
     <div class="mx-auto flex max-w-site items-center justify-center px-4 py-2 text-xs lg:px-gutter lg:text-sm">
-      <ul class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 lg:flex-nowrap lg:gap-0 lg:divide-x lg:divide-black/15">
-        <li v-for="item in promises" :key="item.key" class="flex items-center gap-1.5 lg:gap-2 lg:px-6 lg:first:pl-0 lg:last:pr-0">
+      <ul class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 lg:gap-x-0 lg:divide-x lg:divide-black/15">
+        <li v-for="item in promises" :key="item.key" class="flex items-center gap-1.5 lg:gap-2 lg:px-4 xl:px-6 lg:first:pl-0 lg:last:pr-0">
           <svg class="size-4 shrink-0 text-support lg:size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path v-for="d in icons[item.icon]" :key="d" :d="d" />
           </svg>
