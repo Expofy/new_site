@@ -21,6 +21,7 @@ export const popularCategories: PopularCategory[] = [
     description: { sv: 'Skapa en stark närvaro på mässan.', en: 'Make a strong presence at the fair.' },
     to: '/category/massvaggar',
     image: '/categories/massvaggar.png',
+    hoverImage: '/categories/massvaggar-hover.png',
   },
   {
     id: 'massbord',
@@ -49,6 +50,8 @@ export const popularCategories: PopularCategory[] = [
     description: { sv: 'För event och utomhusaktiviteter.', en: 'For events and outdoor activities.' },
     to: '/category/reklamtalt',
     image: '/categories/reklamtalt.png',
+    // Cut out of a screenshot of the live site's product gallery.
+    hoverImage: '/categories/reklamtalt-hover.png',
   },
   {
     id: 'vepor',
@@ -63,6 +66,7 @@ export const popularCategories: PopularCategory[] = [
     description: { sv: 'Profilera ditt varumärke i alla miljöer.', en: 'Show your brand in any setting.' },
     to: '/category/reklamflaggor',
     image: '/categories/reklamflaggor.png',
+    hoverImage: '/categories/reklamflaggor-hover.png',
   },
   {
     // The one tile that points below the top level: the live site links

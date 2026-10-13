@@ -23,7 +23,7 @@ Typed in `app/types/navigation.ts`, populated in `app/data/navigation.ts`.
 
 Typed in `app/types/category.ts`, populated in `app/data/categories.ts`. Backs the front page's "Populära kategorier" block.
 
-- A tile is `id`, `label`, `to`, `image` — no more. Array order is render order, so there is no `order` field that could disagree with it.
+- A tile is `id`, `label`, `description`, `to`, `image`, and an optional `hoverImage` — no more. A tile with a `hoverImage` cross-fades to it on hover and keyboard focus; one without keeps its single image. Array order is render order, so there is no `order` field that could disagree with it.
 - "Popular" is editorial, not computed. On the live site the block is hand-built, and it stays a curated list when the backend owns it; nothing here derives from sales.
 - `to` is a locale-agnostic path into the catalogue and is the only tie between a tile and the mega menu. Labels are deliberately allowed to differ — the front page shows "Mässbord" where the menu shows "Mässbord & diskar" — so `test/categories.test.ts` checks the path, not the wording, and accepts a path *below* a menu category (Ljuslådor sits under Displayer).
 - No alt text travels with the image. The tile always renders it `alt=""`, because the label is already the link's accessible name.

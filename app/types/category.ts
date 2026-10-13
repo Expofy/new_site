@@ -33,4 +33,11 @@ export interface PopularCategory {
    * follow. A render that needed describing would not belong in a tile.
    */
   image: string
+  /**
+   * Optional second render, swapped in while the tile is hovered or focused —
+   * the same product in another print, say. Same rules as `image`: a
+   * transparent square in `public/categories/`, rendered `alt=""`. Left off,
+   * the tile keeps its one image.
+   */
+  hoverImage?: string
 }

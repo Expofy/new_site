@@ -73,10 +73,16 @@ describe('every tile points into the catalogue', () => {
 describe('popular category images', () => {
   const publicDir = fileURLToPath(new URL('../public', import.meta.url))
 
+  /** Both renders a tile can show: the hover one follows the same rules. */
+  const renders = popularCategories.flatMap(category => [
+    { id: category.id, src: category.image },
+    ...(category.hoverImage ? [{ id: `${category.id} (hover)`, src: category.hoverImage }] : []),
+  ])
+
   it('ships a file for every render referenced', () => {
-    for (const category of popularCategories) {
-      expect(category.image.startsWith('/'), category.id).toBe(true)
-      expect(existsSync(`${publicDir}${category.image}`), `missing public${category.image}`).toBe(true)
+    for (const render of renders) {
+      expect(render.src.startsWith('/'), render.id).toBe(true)
+      expect(existsSync(`${publicDir}${render.src}`), `missing public${render.src}`).toBe(true)
     }
   })
 
@@ -87,11 +93,11 @@ describe('popular category images', () => {
   it('keeps every render square, since the tile states one intrinsic size', async () => {
     const { readFile } = await import('node:fs/promises')
 
-    for (const category of popularCategories) {
-      const png = await readFile(`${publicDir}${category.image}`)
+    for (const render of renders) {
+      const png = await readFile(`${publicDir}${render.src}`)
       const width = png.readUInt32BE(16)
       const height = png.readUInt32BE(20)
-      expect(width, `${category.id} is ${width}x${height}`).toBe(height)
+      expect(width, `${render.id} is ${width}x${height}`).toBe(height)
     }
   })
 })

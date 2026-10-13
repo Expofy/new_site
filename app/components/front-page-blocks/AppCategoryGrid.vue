@@ -57,15 +57,32 @@ const text = useLocalizedText()
           >
             <!-- alt="" — the label below is the link's accessible name, and the
                  render would only say the category twice. Every source is a
-                 transparent square, so the intrinsic box is stated once here. -->
-            <img
-              :src="category.image"
-              alt=""
-              width="300"
-              height="300"
-              loading="lazy"
-              class="mb-3 h-32 w-full object-contain sm:h-44"
-            >
+                 transparent square, so the intrinsic box is stated once here.
+
+                 A tile with a `hoverImage` stacks both renders in one grid
+                 cell and cross-fades on hover and on keyboard focus, so the
+                 box never changes size. The second one is lazy too: it costs
+                 nothing until the block scrolls into view. -->
+            <div class="mb-3 grid">
+              <img
+                :src="category.image"
+                alt=""
+                width="300"
+                height="300"
+                loading="lazy"
+                class="col-start-1 row-start-1 h-32 w-full object-contain sm:h-44"
+                :class="category.hoverImage && 'transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0 motion-reduce:transition-none'"
+              >
+              <img
+                v-if="category.hoverImage"
+                :src="category.hoverImage"
+                alt=""
+                width="300"
+                height="300"
+                loading="lazy"
+                class="col-start-1 row-start-1 h-32 w-full object-contain opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none sm:h-44"
+              >
+            </div>
 
             <div class="mt-auto flex items-end gap-2">
               <div class="min-w-0 flex-1">
