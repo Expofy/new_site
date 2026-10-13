@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { showroomTeaserCases } from '~/data/showroom'
+import type { BandBackground } from '~/types/band'
+
+withDefaults(defineProps<{ bg?: BandBackground }>(), { bg: 'sunken' })
 
 const { t } = useI18n()
 const localePath = useLocalePath()
@@ -9,7 +12,7 @@ const text = useLocalizedText()
 <template>
   <!-- The same shell as "Nyheter", on `surface-sunken` instead of
        `surface-raised` so the two adjacent bands do not run together. -->
-  <section class="bg-surface-sunken py-section" aria-labelledby="showroom-teaser-heading">
+  <AppBand :bg="bg" aria-labelledby="showroom-teaser-heading">
     <div class="mx-auto max-w-site px-gutter">
       <div class="mb-stack flex flex-wrap items-end justify-between gap-4">
         <div>
@@ -98,5 +101,5 @@ const text = useLocalizedText()
         </li>
       </ul>
     </div>
-  </section>
+  </AppBand>
 </template>

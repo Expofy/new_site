@@ -143,6 +143,21 @@
 }
 
 @layer components {
+  /* A front-page block's band (AppBand). Padding on both sides, so blocks can
+   * be put in any order. Two adjacent bands of the same colour read as one
+   * surface, so the second drops its top padding: the gap between their
+   * content stays one section, not two. Comment nodes between them do not
+   * break `+`, which only sees elements. */
+  .band {
+    padding-block: var(--spacing-section);
+  }
+
+  .band[data-band="surface"] + .band[data-band="surface"],
+  .band[data-band="raised"] + .band[data-band="raised"],
+  .band[data-band="sunken"] + .band[data-band="sunken"] {
+    padding-top: 0;
+  }
+
   /* The dark bands — top navigation and footer — are ink on the Saved Pages.
    * Anything inside them flips the focus ring to white (12.82:1 on ink) and
    * must not use `brand` for text or icons, which is 2.92:1 there. */

@@ -53,6 +53,8 @@ The blocks that only the front page uses live in `app/components/front-page-bloc
 
 They keep their plain names. `nuxt.config.ts` sets `pathPrefix: false` on the components directory, so a subdirectory groups files without renaming what they register: `AppHero` stays `AppHero` rather than becoming `FrontPageBlocksAppHero`. The `App` prefix every component already carries is what keeps the names unique, so the path does not need to.
 
+**Every block below the hero sits in an `AppBand`**, which owns its background and its padding on both sides. No block assumes anything about its neighbours, so the order in `pages/index.vue` can be changed freely. The background is a `bg` prop with three values — `surface` (white), `raised` (`surface-raised`) and `sunken` (`surface-sunken`) — and each block has its own default. Two adjacent bands of the same colour read as one surface, so `.band` in `main.css` drops the second one's top padding: the gap between them stays one section instead of two. This replaced hand-tuned spacing — the services block used to carry `pb-section` only and the promo band `my-section` — which broke as soon as the blocks were reordered.
+
 ### Hero
 
 `AppHero.vue` picks a Slider Group and renders its lowest-`order` slide; `AppHeroSlide.vue` holds every setting. Types in `app/types/hero.ts` are modelled field-for-field on the "Add New Slide" admin screen, with the admin's own field name quoted on anything that was renamed, so connecting the backend is a mapping exercise rather than a translation.
@@ -120,7 +122,7 @@ This block does not exist on the old site. It was built from a supplied design, 
 - **One link per card**, stretched over the whole card by its own `after` layer — the card is the click target the design implies, without the second tab stop a wrapping anchor would add. Its name is the visible "Läs mer" plus the card's `h3`, because six links all named "Läs mer" are six identical entries in a screen reader's link list.
 - **No numbers on the cards**, and no rule above the eyebrow — the design showed a `01`–`06` counter and an underline beneath it; both were dropped. The list is a `ul` because of the first: an `ol` would assert an order nothing on screen backs up.
 - **The card speaks in `support`, not `brand`.** The eyebrow, the "Läs mer" link and the track's scrollbar are all teal — the site's help-and-service voice, which is the register a block of services belongs in, and it leaves `brand` to the pieces that sell. "Läs mer" hovers to an underline instead of a second colour: there is only one `support` token, and jumping to `brand-deep` on hover would cross voices mid-interaction.
-- **The band is white and the block has no top padding.** The categories block above it is also white and already ends in a full `py-section`; a top padding here would stack two of them and open twice the gap the hero leaves above "Populära kategorier".
+- **The band is white by default**, an `AppBand` like every other block, so its spacing holds wherever it is placed.
 - **How many cards show is a `columns` prop, default 6.** It is an editorial call about how much of the offer to show at a glance, not a layout constant, so it is data the backend will own rather than a number in a stylesheet. The component clamps it — `Math.max(1, Math.round())` — because it divides the row width, and a 0 from the CMS would be a division by zero.
 - **The prop is a maximum, not a fixed count.** It reaches CSS as `--card-track-columns-max` on the element, and each breakpoint takes `min()` of it and its own ceiling: 2 at 640px, 3 at 768px, 4 at 1024px, the full value at 1366px. So `columns: 3` gives three across on desktop and still one on a phone, instead of three squeezed onto 360px. Same idiom as the mega menu's `--nav-columns`.
 - **Every card in the row is the same height**, which grid stretch gives for free — the cards are items in one grid row. The illustration also has a fixed 108px box with `object-contain` rather than scaling with the card, because a 4:3 drawing at `w-full` is 143px tall across a sixth of the row and 240px across a third, and a band that swings by 100px between configurations is not a band. That box is the card's height dial.
@@ -177,7 +179,7 @@ Card height is *not* pinned across column counts — see the bullet above for wh
 
 ### Promo band
 
-`AppPromoBanner.vue` sits between the categories and the services: a photograph of a sunlit forest with a deer in it, a leaf mark in a ring, "Tillsammans för en grönare framtid", one sentence, and a single CTA. New in V2 — the old site has no equivalent — and built from a supplied design. Content is `app/data/promo.ts`; the shape is in `DATA-MODEL.md`.
+`AppPromoBanner.vue` sits under the services: a photograph of a sunlit forest with a deer in it, a leaf mark in a ring, "Tillsammans för en grönare framtid", one sentence, and a single CTA. New in V2 — the old site has no equivalent — and built from a supplied design. Content is `app/data/promo.ts`; the shape is in `DATA-MODEL.md`.
 
 It is a **contained panel**, not a full-bleed band. It sits in the same `max-w-site px-gutter` column as the blocks above and below and carries the `md` card radius, and its own text is inset again with `px-card`. The headline therefore does not line up with "Populära kategorier" above it, which is correct — it is inside something.
 

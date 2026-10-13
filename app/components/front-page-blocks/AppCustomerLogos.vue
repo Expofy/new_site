@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { customerLogos } from '~/data/customers'
+import type { BandBackground } from '~/types/band'
+
+withDefaults(defineProps<{ bg?: BandBackground }>(), { bg: 'surface' })
 
 const { t } = useI18n()
 </script>
 
 <template>
   <!-- White band, white tiles: the tile border alone draws the grid. -->
-  <section class="bg-surface py-section" aria-labelledby="customers-heading">
+  <AppBand :bg="bg" aria-labelledby="customers-heading">
     <div class="mx-auto max-w-site px-gutter">
       <div class="mb-stack">
         <h2 id="customers-heading" class="text-h2 font-semibold">
@@ -43,5 +46,5 @@ const { t } = useI18n()
         </li>
       </ul>
     </div>
-  </section>
+  </AppBand>
 </template>

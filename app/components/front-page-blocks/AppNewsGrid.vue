@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { newsProducts } from '~/data/news'
+import type { BandBackground } from '~/types/band'
+
+withDefaults(defineProps<{ bg?: BandBackground }>(), { bg: 'raised' })
 
 const { t } = useI18n()
 const localePath = useLocalePath()
@@ -9,7 +12,7 @@ const text = useLocalizedText()
 <template>
   <!-- The same shell as "Populära kategorier": `surface-raised` behind white
        cards, heading and "see all" pill in one wrapping row. -->
-  <section class="bg-surface-raised py-section" aria-labelledby="news-heading">
+  <AppBand :bg="bg" aria-labelledby="news-heading">
     <div class="mx-auto max-w-site px-gutter">
       <div class="mb-stack flex flex-wrap items-end justify-between gap-4">
         <div>
@@ -80,5 +83,5 @@ const text = useLocalizedText()
         </li>
       </ul>
     </div>
-  </section>
+  </AppBand>
 </template>

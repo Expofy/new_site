@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { services } from '~/data/services'
+import type { BandBackground } from '~/types/band'
 
 /**
  * How many cards are on screen at the widest step. Backend-owned once the CMS
@@ -11,7 +12,7 @@ import { services } from '~/data/services'
  * from it (see `.card-track` in main.css), so setting 3 here gives three across
  * on desktop and still one on a phone, rather than three squeezed onto 360px.
  */
-const props = withDefaults(defineProps<{ columns?: number }>(), { columns: 6 })
+const props = withDefaults(defineProps<{ columns?: number, bg?: BandBackground }>(), { columns: 6, bg: 'surface' })
 
 /**
  * Guarded because the value comes from outside. It divides the row width, so a
@@ -110,10 +111,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', syncEdges))
 </script>
 
 <template>
-  <!-- `pb-section` only. The block above is also white and already ends in a
-       full `py-section`, so a top padding here would stack two of them and open
-       twice the gap the hero leaves above "Populära kategorier". -->
-  <section class="bg-surface pb-section" aria-labelledby="services-heading">
+  <AppBand :bg="bg" aria-labelledby="services-heading">
     <div class="mx-auto max-w-site px-gutter">
       <div class="mb-stack flex items-center justify-between gap-4">
         <h2 id="services-heading" class="text-h2 font-semibold">
@@ -269,5 +267,5 @@ onBeforeUnmount(() => window.removeEventListener('resize', syncEdges))
         </li>
       </ul>
     </div>
-  </section>
+  </AppBand>
 </template>

@@ -20,30 +20,31 @@ const swatches = [
 </script>
 
 <template>
-  <!-- Front-page blocks, in the Saved Page's order — except the promo band,
-       which has no counterpart on the old site and is placed here because it
-       breaks the run of white blocks between the categories and the services.
+  <!-- Front-page blocks. Each one owns its padding top and bottom, so they can
+       be reordered freely — move a line and the spacing follows. `bg` picks
+       the band colour: `surface` (white), `raised` or `sunken` (greys); left
+       off, each block uses its own default. Two neighbours on the same colour
+       merge into one band (see `.band` in main.css). The hero is full-bleed
+       media and has no band.
        Everything below them is still the Phase 1 verification page and goes
        when Phase 3 lands. -->
   <AppHero group="front-page" />
-  <AppCategoryGrid />
-  <AppPromoBanner id="eco" />
-  <AppServiceSlider :columns="5" />
-
+  <AppCategoryGrid bg="raised" />
+  <AppServiceSlider :columns="5" bg="surface" />
+  <AppPromoBanner id="eco" bg="surface" />
   <!-- "Smart val". The component is the panel and nothing else — no band, no
        container, no gutter — so the page supplies both. That is what lets two
        panels share a row: swap this wrapper for a two-column grid and each
        copy stacks itself, because it switches form on its own width. -->
-  <div class="bg-surface-sunken py-section">
+  <AppBand as="div" bg="sunken">
     <div class="mx-auto max-w-site px-gutter">
       <AppSmartChoice id="byt-duk" />
     </div>
-  </div>
-
-  <AppNewsGrid />
-  <AppShowroomTeaser />
-  <AppCustomerLogos />
-  <AppFaq />
+  </AppBand>
+  <AppNewsGrid bg="raised" />
+  <AppShowroomTeaser bg="sunken" />
+  <AppCustomerLogos bg="surface" />
+  <AppFaq bg="raised" />
 
   <div class="mx-auto max-w-site px-4 py-12">
     <h1 class="text-h1 mb-2">{{ t('site.name') }}</h1>

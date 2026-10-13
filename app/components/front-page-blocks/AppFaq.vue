@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { faqEntries } from '~/data/faq'
+import type { BandBackground } from '~/types/band'
+
+withDefaults(defineProps<{ bg?: BandBackground }>(), { bg: 'raised' })
 
 const { t } = useI18n()
 const localePath = useLocalePath()
@@ -11,7 +14,7 @@ const helpPoints = ['fast', 'personal', 'quote'] as const
 <template>
   <!-- `surface-raised`, so the white question cards and the white customer
        logo band above both stay distinct from it. -->
-  <section class="bg-surface-raised py-section" aria-labelledby="faq-heading">
+  <AppBand :bg="bg" aria-labelledby="faq-heading">
     <div class="mx-auto grid max-w-site gap-8 px-gutter lg:grid-cols-[1.3fr_1fr]">
       <div>
         <div class="mb-stack">
@@ -131,5 +134,5 @@ const helpPoints = ['fast', 'personal', 'quote'] as const
         </div>
       </div>
     </div>
-  </section>
+  </AppBand>
 </template>

@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { popularCategories } from '~/data/categories'
+import type { BandBackground } from '~/types/band'
+
+withDefaults(defineProps<{ bg?: BandBackground }>(), { bg: 'raised' })
 
 const { t } = useI18n()
 const localePath = useLocalePath()
@@ -9,7 +12,7 @@ const text = useLocalizedText()
 <template>
   <!-- `surface-raised` behind white cards: the tiles need an edge, and a tint
        under the whole block gives them one without a border on every card. -->
-  <section class="bg-surface-raised py-section" aria-labelledby="popular-categories-heading">
+  <AppBand :bg="bg" aria-labelledby="popular-categories-heading">
     <div class="mx-auto max-w-site px-gutter">
       <!-- The "see all" pill sits beside the heading where there is room and
            drops under the subheading where there is not; `items-end` keeps it
@@ -82,5 +85,5 @@ const text = useLocalizedText()
         </li>
       </ul>
     </div>
-  </section>
+  </AppBand>
 </template>
