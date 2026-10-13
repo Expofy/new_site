@@ -2,8 +2,9 @@ import type { FaqEntry } from '~/types/faq'
 
 /**
  * The five questions of the front page's "Vanliga frågor" block, in the
- * design's order. The design draws them all closed, so it has questions but no
- * answers.
+ * design's order. The help drawer lists the same entries, grouped by
+ * `category`, so a question added here shows up in both. The design draws
+ * them all closed, so it has questions but no answers.
  *
  * The answers are placeholders written for the template, not Expofy's own
  * wording. Two of them promise things — samples and volume pricing — that
@@ -16,6 +17,7 @@ import type { FaqEntry } from '~/types/faq'
 export const faqEntries: FaqEntry[] = [
   {
     id: 'leveranstid',
+    category: 'delivery',
     question: { sv: 'Hur lång är leveranstiden?', en: 'How long is the delivery time?' },
     answer: {
       sv: 'Det beror på produkt och upplaga – leveranstiden visas på varje produktsida. Har du ett datum att hålla, berätta det när du beställer så hittar vi en lösning.',
@@ -25,6 +27,7 @@ export const faqEntries: FaqEntry[] = [
   },
   {
     id: 'original',
+    category: 'design',
     question: { sv: 'Kan ni hjälpa till med original?', en: 'Can you help with artwork?' },
     answer: {
       sv: 'Ja. Våra grafiker kan göra ditt befintliga material tryckfärdigt, eller ta fram ett nytt original utifrån din logotyp och ditt budskap.',
@@ -34,6 +37,7 @@ export const faqEntries: FaqEntry[] = [
   },
   {
     id: 'montage',
+    category: 'delivery',
     question: { sv: 'Erbjuder ni montage på plats?', en: 'Do you offer on-site installation?' },
     answer: {
       sv: 'Ja, vi monterar mässmontrar, skyltar och dekaler på plats – hos dig eller på mässan. Berätta var och när, så lämnar vi ett förslag.',
@@ -43,6 +47,7 @@ export const faqEntries: FaqEntry[] = [
   },
   {
     id: 'prover',
+    category: 'order',
     question: { sv: 'Kan jag beställa prover?', en: 'Can I order samples?' },
     answer: {
       sv: 'Ja, de flesta material kan skickas som prov, så att du kan känna på kvaliteten och se färgerna innan du beställer. Kontakta oss och berätta vilka material du är intresserad av.',
@@ -51,6 +56,7 @@ export const faqEntries: FaqEntry[] = [
   },
   {
     id: 'specialpriser',
+    category: 'order',
     question: { sv: 'Har ni specialpriser vid större beställningar?', en: 'Do you offer special prices on larger orders?' },
     answer: {
       sv: 'Ja. För större upplagor och återkommande beställningar tar vi gärna fram en offert med volympris.',

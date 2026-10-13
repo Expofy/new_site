@@ -205,7 +205,6 @@ The greens were lightened once and warmed once on the brief that the block shoul
 
 Nothing is claimed for the main menu beyond the above. The remaining known queue, in order:
 
-- `AppSupportBlock` — A11Y-02 (form controls at 1.25:1 where 3:1 is required) and A11Y-06 (submit button has no hover, active, or pointer). It is the last unaudited interactive component.
 - The systemic items from the audit notes: a `--color-border-field` token so the correct border is the default one, and a single `@layer base` rule for `cursor-pointer` on buttons.
 - A real keyboard and screen-reader pass over the finished header + menu + hero, which is the only thing that can close A11Y-03 and A11Y-09, and the only way to know whether the carousel's live region actually reads well.
 - The next front-page block, whichever it is.

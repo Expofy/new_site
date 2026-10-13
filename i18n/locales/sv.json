@@ -93,19 +93,33 @@
     "heading": "Vi stödjer:"
   },
   "support": {
-    "heading": "Behöver du hjälp?",
-    "contactHeading": "Kontakta oss",
-    "intro": "Ring eller maila oss direkt. Eller skicka ett meddelande via formuläret så återkommer vi så fort vi kan.",
     "formHeading": "Kontaktformulär",
     "requiredNote": "„*” anger obligatoriska fält",
     "name": "Namn",
+    "company": "Företagsnamn",
     "email": "E-post",
+    "phone": "Telefon",
     "message": "Meddelande",
+    "messageHint": "Berätta vad du funderar på. Har du en fråga till oss? Fråga på!",
     "submit": "Skicka formulär",
     "privacy": "Genom att skicka formulär godkänner du vår",
     "privacyLink": "integritetspolicy",
     "sent": "Tack! Ditt meddelande har skickats.",
     "required": "Obligatoriskt fält"
+  },
+  "help": {
+    "tab": "Hjälp",
+    "heading": "Hjälp",
+    "close": "Stäng",
+    "back": "Tillbaka",
+    "contact": "Vi hjälper dig gärna – {hours}. Ring oss på {phone} eller maila {email}.",
+    "faqLink": "Vanliga frågor & svar (FAQ)",
+    "faqHeading": "Frågor & svar",
+    "categories": {
+      "order": "Beställning",
+      "design": "Design",
+      "delivery": "Leverans"
+    }
   },
   "quote": {
     "open": "Begär offert",

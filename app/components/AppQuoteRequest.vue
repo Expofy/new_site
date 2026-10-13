@@ -24,7 +24,7 @@ watchEffect(() => {
   firstArea.value?.setCustomValidity(areas.value.length ? '' : t('quote.areaRequired'))
 })
 
-// No backend exists yet. Same as AppSupportBlock: native validation, then a
+// No backend exists yet. Same as AppHelpDrawer: native validation, then a
 // local success state.
 function onSubmit() {
   sent.value = true

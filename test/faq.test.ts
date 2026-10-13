@@ -4,6 +4,8 @@ import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { faqEntries } from '../app/data/faq'
 import { services } from '../app/data/services'
+import en from '../i18n/locales/en.json'
+import sv from '../i18n/locales/sv.json'
 
 const duplicates = (values: string[]) => values.filter((v, i) => values.indexOf(v) !== i)
 
@@ -32,6 +34,17 @@ describe('faq entries', () => {
     const servicePaths = services.map(service => service.to)
     for (const entry of faqEntries.filter(entry => entry.link)) {
       expect(servicePaths, entry.id).toContain(entry.link!.to)
+    }
+  })
+
+  /**
+   * The help drawer heads each group with `help.categories.<category>`. A
+   * missing label is not a crash: vue-i18n prints the key path as the heading.
+   */
+  it('labels every category the entries use, in both locales', () => {
+    for (const entry of faqEntries) {
+      expect(sv.help.categories, entry.id).toHaveProperty(entry.category)
+      expect(en.help.categories, entry.id).toHaveProperty(entry.category)
     }
   })
 })
