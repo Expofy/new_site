@@ -273,7 +273,7 @@
     gap: var(--card-track-gap);
     overflow-x: auto;
     scrollbar-width: thin;
-    scrollbar-color: var(--color-brand-strong) transparent;
+    scrollbar-color: var(--color-ink-muted) transparent;
   }
 
   /* Each step is a ceiling, not a count: `min()` against the configured maximum
@@ -313,7 +313,7 @@
   }
 
   .card-track::-webkit-scrollbar-thumb {
-    background: var(--color-brand-strong);
+    background: var(--color-ink-muted);
     border-radius: 999px;
   }
 

@@ -163,7 +163,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', syncEdges))
            it does not. -->
       <ul
         ref="track"
-        class="card-track list-none pb-2 snap-x snap-mandatory"
+        class="card-track list-none pb-5 snap-x snap-mandatory"
         :style="{ '--card-track-columns-max': columns }"
         @scroll.passive="syncEdges"
       >
