@@ -29,7 +29,7 @@ const text = useLocalizedText()
 
         <NuxtLink
           :to="localePath('/category')"
-          class="group inline-flex shrink-0 items-center gap-2 rounded-full bg-brand-strong px-6 py-3 font-medium text-white transition-colors hover:bg-brand-deep active:brightness-90"
+          class="group inline-flex shrink-0 items-center gap-2 rounded-full border border-brand-strong px-4 py-2 text-sm font-medium text-brand-strong transition-colors hover:bg-brand-tint active:brightness-90 sm:border-0 sm:bg-brand-strong sm:px-6 sm:py-3 sm:text-base sm:text-white sm:hover:bg-brand-deep"
         >
           {{ t('categories.seeAll') }}
           <svg class="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transform-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">

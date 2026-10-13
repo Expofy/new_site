@@ -24,11 +24,14 @@ const text = useLocalizedText()
           </p>
         </div>
 
-        <!-- Hover goes to `brand-deep`, not lighter `brand`: white on `brand`
-             is 4.40:1, under the 4.5:1 a 16px label needs. -->
+        <!-- Below `sm` it is an outline pill — a lighter weight under a heading
+             that already fills a phone's width; `brand-strong` on the band is
+             4.50:1 at worst. From `sm` up it is the filled pill, and hover goes
+             to `brand-deep`, not lighter `brand`: white on `brand` is 4.40:1,
+             under the 4.5:1 a 16px label needs. -->
         <NuxtLink
           :to="localePath('/nyheter')"
-          class="group inline-flex shrink-0 items-center gap-2 rounded-full bg-brand-strong px-6 py-3 font-medium text-white transition-colors hover:bg-brand-deep active:brightness-90"
+          class="group inline-flex shrink-0 items-center gap-2 rounded-full border border-brand-strong px-4 py-2 text-sm font-medium text-brand-strong transition-colors hover:bg-brand-tint active:brightness-90 sm:border-0 sm:bg-brand-strong sm:px-6 sm:py-3 sm:text-base sm:text-white sm:hover:bg-brand-deep"
         >
           {{ t('news.seeAll') }}
           <svg class="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transform-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
