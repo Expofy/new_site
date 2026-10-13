@@ -23,15 +23,13 @@ const swatches = [
   <!-- Front-page blocks. Each one owns its padding top and bottom, so they can
        be reordered freely — move a line and the spacing follows. `bg` picks
        the band colour: `surface` (white), `raised` or `sunken` (greys); left
-       off, each block uses its own default. Two neighbours on the same colour
-       merge into one band (see `.band` in main.css). The hero is full-bleed
-       media and has no band.
+       off, each block uses its own default. The hero is full-bleed media and
+       has no band.
        Everything below them is still the Phase 1 verification page and goes
        when Phase 3 lands. -->
   <AppHero group="front-page" />
   <AppCategoryGrid bg="raised" />
   <AppServiceSlider :columns="5" bg="surface" />
-  <AppPromoBanner id="eco" bg="surface" />
   <!-- "Smart val". The component is the panel and nothing else — no band, no
        container, no gutter — so the page supplies both. That is what lets two
        panels share a row: swap this wrapper for a two-column grid and each
@@ -44,6 +42,7 @@ const swatches = [
   <AppNewsGrid bg="raised" />
   <AppShowroomTeaser bg="sunken" />
   <AppCustomerLogos bg="surface" />
+  <AppPromoBanner id="eco" bg="surface" />
   <AppFaq bg="raised" />
 
   <div class="mx-auto max-w-site px-4 py-12">

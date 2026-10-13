@@ -144,18 +144,13 @@
 
 @layer components {
   /* A front-page block's band (AppBand). Padding on both sides, so blocks can
-   * be put in any order. Two adjacent bands of the same colour read as one
-   * surface, so the second drops its top padding: the gap between their
-   * content stays one section, not two. Comment nodes between them do not
-   * break `+`, which only sees elements. */
+   * be put in any order and the content of any two neighbours is two sections
+   * apart. That holds for two bands of the same colour too: collapsing their
+   * shared gap to one section was tried, and it squeezed the second block
+   * against the first while every colour change on the page kept the full
+   * gap. */
   .band {
     padding-block: var(--spacing-section);
-  }
-
-  .band[data-band="surface"] + .band[data-band="surface"],
-  .band[data-band="raised"] + .band[data-band="raised"],
-  .band[data-band="sunken"] + .band[data-band="sunken"] {
-    padding-top: 0;
   }
 
   /* The dark bands — top navigation and footer — are ink on the Saved Pages.

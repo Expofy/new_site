@@ -53,7 +53,7 @@ The blocks that only the front page uses live in `app/components/front-page-bloc
 
 They keep their plain names. `nuxt.config.ts` sets `pathPrefix: false` on the components directory, so a subdirectory groups files without renaming what they register: `AppHero` stays `AppHero` rather than becoming `FrontPageBlocksAppHero`. The `App` prefix every component already carries is what keeps the names unique, so the path does not need to.
 
-**Every block below the hero sits in an `AppBand`**, which owns its background and its padding on both sides. No block assumes anything about its neighbours, so the order in `pages/index.vue` can be changed freely. The background is a `bg` prop with three values — `surface` (white), `raised` (`surface-raised`) and `sunken` (`surface-sunken`) — and each block has its own default. Two adjacent bands of the same colour read as one surface, so `.band` in `main.css` drops the second one's top padding: the gap between them stays one section instead of two. This replaced hand-tuned spacing — the services block used to carry `pb-section` only and the promo band `my-section` — which broke as soon as the blocks were reordered.
+**Every block below the hero sits in an `AppBand`**, which owns its background and its padding on both sides. No block assumes anything about its neighbours, so the order in `pages/index.vue` can be changed freely. The background is a `bg` prop with three values — `surface` (white), `raised` (`surface-raised`) and `sunken` (`surface-sunken`) — and each block has its own default. Neighbours on the same colour keep both paddings too, so the content of any two blocks is two sections apart wherever they are. Collapsing a same-colour pair to one section was tried and dropped: with the customer logos and the promo band both white, the banner sat 48px under the logos while every colour change on the page kept 96px. This replaced hand-tuned spacing — the services block used to carry `pb-section` only and the promo band `my-section` — which broke as soon as the blocks were reordered.
 
 ### Hero
 
@@ -179,7 +179,7 @@ Card height is *not* pinned across column counts — see the bullet above for wh
 
 ### Promo band
 
-`AppPromoBanner.vue` sits under the services: a photograph of a sunlit forest with a deer in it, a leaf mark in a ring, "Tillsammans för en grönare framtid", one sentence, and a single CTA. New in V2 — the old site has no equivalent — and built from a supplied design. Content is `app/data/promo.ts`; the shape is in `DATA-MODEL.md`.
+`AppPromoBanner.vue` sits under the customer logos: a photograph of a sunlit forest with a deer in it, a leaf mark in a ring, "Tillsammans för en grönare framtid", one sentence, and a single CTA. New in V2 — the old site has no equivalent — and built from a supplied design. Content is `app/data/promo.ts`; the shape is in `DATA-MODEL.md`.
 
 It is a **contained panel**, not a full-bleed band. It sits in the same `max-w-site px-gutter` column as the blocks above and below and carries the `md` card radius, and its own text is inset again with `px-card`. The headline therefore does not line up with "Populära kategorier" above it, which is correct — it is inside something.
 
