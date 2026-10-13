@@ -56,7 +56,7 @@ const icons: Record<SmartChoiceIcon, string> = {
   -->
   <section
     v-if="block"
-    class="@container rounded-md bg-surface p-card shadow-lg"
+    class="@container rounded-md bg-surface p-card shadow-sm"
     :aria-labelledby="`smart-${block.id}-heading`"
   >
     <div class="grid items-center gap-10 @min-[56rem]:grid-cols-[1fr_1.1fr] @min-[56rem]:gap-12">

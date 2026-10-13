@@ -170,7 +170,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', syncEdges))
         <li
           v-for="service in services"
           :key="service.id"
-          class="group relative flex snap-start flex-col rounded-md border border-ink/10 bg-surface p-4 transition-shadow hover:shadow-lg"
+          class="group relative flex snap-start flex-col rounded-md border border-ink/10 bg-surface p-4 shadow-sm"
         >
           <!-- The eyebrow used to be right-aligned as a counterweight to the
                card's number, and carried a short rule beneath it; both are gone
