@@ -73,16 +73,30 @@ const themeClass = {
 
 /**
  * The scrim is the only reason the overlay's contrast is knowable at all —
- * behind it is a photograph nobody measured. Both values are picked for their
- * worst case, which is the media being the opposite extreme:
+ * behind it is a photograph nobody measured. It comes in two layers so the
+ * media can show through everywhere the text is not: a light one over the
+ * whole slide, and a denser one behind the text block only, soft-edged by
+ * `.hero-text-scrim` in main.css. The second is attached to the text block, so
+ * it follows any alignment and any width without being told.
  *
- * - black/60 over a pure white image composites to #666, and white on #666 is
- *   5.74:1. Any darker image only helps. (black/45 would give #8c8c8c and
- *   3.36:1 — enough for large text, not for the paragraph.)
- * - white/70 over pure black composites to #b2b2b2, and ink on #b2b2b2 is
- *   6.05:1.
+ * Under the text the two composite, and that sum is what is sized for the
+ * worst case — the media being the opposite extreme:
+ *
+ * - black/25 + black/50 is 62.5% black; over a pure white frame that is
+ *   #606060, and white on it is 6.33:1. Any darker frame only helps.
+ * - Dark text has no slide-wide layer, only white/80 behind the text: over
+ *   pure black that is #cccccc, and ink on it is 7.99:1 — brand-strong, the
+ *   HTML headline's accent, 3.40:1, which large text needs to clear 3:1. Dark text goes on
+ *   pale media, and a white wash over a pale photo only fogs it — on the wall
+ *   the text usually sits on, the glow behind it is all but invisible.
+ *
+ * The slide-wide layer alone is not enough for text, so nothing may be drawn
+ * outside the text block. The fade lives in the padding around it.
  */
-const scrimClass = { light: 'bg-black/60', dark: 'bg-white/70' }
+const scrimClass = {
+  light: { slide: 'bg-black/25', text: 'before:bg-black/50' },
+  dark: { slide: '', text: 'before:bg-white/80' },
+}
 
 const videoEl = ref<HTMLVideoElement>()
 
@@ -109,9 +123,10 @@ watch(() => props.active && props.motion, (mayPlay) => {
   >
     <!-- Media layer. `alt` comes from the data: empty is correct while the
          overlay carries the message, which is the case for every slide the
-         Saved Pages ship. -->
+         Saved Pages ship. An HTML slide may carry an image too, as the
+         backdrop for its markup. -->
     <img
-      v-if="slide.type === 'image' && slide.image"
+      v-if="(slide.type === 'image' || slide.type === 'html') && slide.image"
       :src="slide.image"
       :alt="slide.imageAlt ? text(slide.imageAlt) : ''"
       class="absolute inset-0 -z-10 size-full object-cover"
@@ -149,51 +164,61 @@ watch(() => props.active && props.motion, (mayPlay) => {
     />
 
     <div
-      v-if="overlay.dark"
+      v-if="overlay.dark && scrimClass[overlay.theme].slide"
       class="absolute inset-0 -z-10"
-      :class="scrimClass[overlay.theme]"
+      :class="scrimClass[overlay.theme].slide"
       aria-hidden="true"
     />
 
     <div
-      class="mx-auto flex w-full max-w-site flex-col gap-stack px-gutter py-section"
+      class="mx-auto flex w-full max-w-site flex-col px-gutter py-section sm:px-[max(var(--spacing-gutter),4.5rem)]"
       :class="[alignY[overlay.alignY], alignX[overlay.alignX], themeClass[overlay.theme]]"
     >
-      <!--
-        Custom HTML is rendered verbatim. It is authored in the admin by staff,
-        so it is trusted the same way the rest of the CMS output is — but it is
-        the one place in this app where markup arrives as a string, and it must
-        stay sanitised on the backend. Never point this at anything a customer
-        can write.
-      -->
-      <!-- Lists are inline-block so the container's own text-align places them:
-           centred under centred text, flush left under left-aligned text. As
-           blocks they span the full column and the markers strand themselves at
-           the padding edge, far from the text they belong to. -->
-      <!-- eslint-disable-next-line vue/no-v-html -->
+      <!-- From `sm` up the side padding is at least 4.5rem, which clears the
+           carousel's prev/next arrows (1rem inset + 2.75rem button + a gap),
+           so left- or right-aligned text never runs under them. -->
+      <!-- The text block, shrink-wrapped to its widest line so the dense scrim
+           layer drawn from it covers the text and not the whole column. -->
       <div
-        v-if="slide.type === 'html' && slide.html"
-        class="max-w-3xl [&_h2]:text-h2 [&_h2]:font-semibold [&_li]:mt-1 [&_p]:mt-4 [&_ul]:mt-4 [&_ul]:inline-block [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:text-left"
-        v-html="text(slide.html)"
-      />
-
-      <h2 v-if="overlay.headline" class="max-w-3xl text-h1 font-semibold">
-        {{ text(overlay.headline) }}
-      </h2>
-
-      <p v-if="overlay.text" class="max-w-2xl text-lg">
-        {{ text(overlay.text) }}
-      </p>
-
-      <NuxtLink
-        v-if="overlay.button"
-        :to="localePath(overlay.button.to)"
-        class="mt-2 inline-flex items-center rounded-full bg-brand-strong px-6 py-3 font-medium text-white transition-colors hover:bg-brand-deep active:brightness-90"
+        class="relative isolate flex flex-col gap-stack"
+        :class="[alignX[overlay.alignX], overlay.dark && ['hero-text-scrim', scrimClass[overlay.theme].text]]"
       >
-        {{ text(overlay.button.label) }}
-      </NuxtLink>
+        <!--
+          Custom HTML is rendered verbatim. It is authored in the admin by staff,
+          so it is trusted the same way the rest of the CMS output is — but it is
+          the one place in this app where markup arrives as a string, and it must
+          stay sanitised on the backend. Never point this at anything a customer
+          can write.
+        -->
+        <!-- `.hero-html` in main.css styles the markup by element, so an
+             editor writes plain HTML and gets the house typography: `small`
+             is the eyebrow, `h2` the headline with `em` as its accent, `p`
+             the lead, and `ul` a row of check-marked pills. -->
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <div
+          v-if="slide.type === 'html' && slide.html"
+          class="hero-html max-w-3xl"
+          v-html="text(slide.html)"
+        />
 
-      <span v-if="linked && slide.link?.newTab" class="sr-only">{{ t('hero.newTab') }}</span>
+        <h2 v-if="overlay.headline" class="max-w-3xl text-h1 font-semibold">
+          {{ text(overlay.headline) }}
+        </h2>
+
+        <p v-if="overlay.text" class="max-w-2xl text-lg">
+          {{ text(overlay.text) }}
+        </p>
+
+        <NuxtLink
+          v-if="overlay.button"
+          :to="localePath(overlay.button.to)"
+          class="mt-2 inline-flex items-center rounded-full bg-brand-strong px-6 py-3 font-medium text-white transition-colors hover:bg-brand-deep active:brightness-90"
+        >
+          {{ text(overlay.button.label) }}
+        </NuxtLink>
+
+        <span v-if="linked && slide.link?.newTab" class="sr-only">{{ t('hero.newTab') }}</span>
+      </div>
     </div>
 
   </component>

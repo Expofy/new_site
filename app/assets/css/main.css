@@ -317,6 +317,105 @@
     border-radius: 999px;
   }
 
+  /* The dense layer of the hero scrim, drawn behind the overlay's text block
+   * only (see AppHeroSlide.vue). It reaches 4rem past the block sideways and
+   * 3rem up and down, and fades across exactly that margin — so it is at full
+   * strength over every line of text and gone by the time the photo takes
+   * over. Two linear masks intersected, not one radial: an ellipse would start
+   * fading inside the block's corners, which is where long headlines end. The
+   * colour comes from the component, per text theme. */
+  .hero-text-scrim::before {
+    content: '';
+    position: absolute;
+    inset: -3rem -4rem;
+    z-index: -1;
+    mask-image:
+      linear-gradient(to right, transparent, #000 4rem, #000 calc(100% - 4rem), transparent),
+      linear-gradient(transparent, #000 3rem, #000 calc(100% - 3rem), transparent);
+    mask-composite: intersect;
+    pointer-events: none;
+  }
+
+  /* Custom HTML on a hero slide. Styled by element, not by class, so an editor
+   * writes plain markup in the admin and gets the house typography without
+   * knowing a class name:
+   *
+   *   <small>  eyebrow pill        <h2> headline, <em> inside it is the accent
+   *   <p>      lead paragraph      <ul> benefits as check-marked white pills
+   *
+   * Contrast is sized against the dark-theme scrim's worst case, #cccccc (see
+   * AppHeroSlide.vue): ink 7.99:1, the brand-strong accent 3.40:1 — headline
+   * size only, where 3:1 is the bar. The eyebrow and the pills carry their
+   * own opaque background, so they read the same on any media. */
+  .hero-html {
+    display: flex;
+    flex-direction: column;
+    align-items: inherit;
+    gap: 1rem;
+  }
+
+  .hero-html small {
+    display: inline-block;
+    border-radius: 999px;
+    background-color: var(--color-brand-strong);
+    padding: 0.375rem 0.875rem;
+    color: var(--color-surface);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .hero-html h2 {
+    font-size: var(--text-h1);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .hero-html h2 em {
+    font-style: normal;
+    color: var(--color-brand-strong);
+  }
+
+  .hero-html p {
+    max-width: 34rem;
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .hero-html ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    list-style: none;
+  }
+
+  .hero-html li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    background-color: var(--color-surface);
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.06), 0 6px 16px rgb(0 0 0 / 0.08);
+  }
+
+  /* White tick in a brand-strong disc: 5.46:1 against the pill. */
+  .hero-html li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 999px;
+    background: var(--color-brand-strong) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 0.875rem no-repeat;
+  }
+
   /* Chrome and Safari draw their own clear affordance inside type="search": a
    * heavy near-black glyph in the UA's own color, which belongs to no palette
    * here. The shape is replaced with a thin cross in muted ink. Firefox draws

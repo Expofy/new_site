@@ -63,7 +63,10 @@ export interface HeroSlide {
    * rather than the renderer silently dropping one of them.
    */
   link?: HeroLink
-  /** "Featured image" — the picture when type is `image`, the poster when `video`. */
+  /**
+   * "Featured image" — the picture when type is `image`, the poster when
+   * `video`, and the backdrop behind the markup when `html`.
+   */
   image?: string
   /**
    * Not an admin field yet. Empty string means decorative, which is correct

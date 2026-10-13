@@ -93,14 +93,14 @@ describe('a linked slide has nothing interactive of its own', () => {
  *
  * The button counts as light content too — not for its label, which is white on
  * `brand-strong` whatever is behind it, but for its focus ring, which is white
- * and drawn outside the pill. On a scrim that is 5.74:1 at worst; on raw media
+ * and drawn outside the pill. On a scrim that is 5.57:1 at worst; on raw media
  * it is unknowable, exactly like the text.
  */
 describe('overlay contrast', () => {
   it('scrims every slide that puts light text over media', () => {
     for (const slide of heroSlides) {
-      const hasMedia = slide.type !== 'html'
-      const hasText = Boolean(slide.overlay.headline ?? slide.overlay.text ?? slide.overlay.button)
+      const hasMedia = slide.type !== 'html' || Boolean(slide.image)
+      const hasText = slide.type === 'html' || Boolean(slide.overlay.headline ?? slide.overlay.text ?? slide.overlay.button)
 
       if (hasMedia && hasText && slide.overlay.theme === 'light') {
         expect(slide.overlay.dark, `${slide.id} is light text on media without a scrim`).toBe(true)

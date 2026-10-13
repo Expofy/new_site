@@ -139,11 +139,15 @@ const motionLabel = computed(() => {
          outline is offset 2px OUTSIDE its element, which put a white ring on the
          slide itself — invisible on a pale photograph, and 1.10:1 on the HTML
          slide's `surface-sunken`. So these draw their own ring inset instead,
-         the same fix and the same pseudo-element mechanism as A11Y-05/07/08. -->
+         the same fix and the same pseudo-element mechanism as A11Y-05/07/08.
+         Below `sm` the arrows drop to the bottom corners, level with the dots
+         pill: mid-height on a phone they sat on top of left- or right-aligned
+         text, and the slide has no width to spare for padding round them. From
+         `sm` up the slide's text is padded clear of them instead. -->
     <template v-if="canRotate">
       <button
         type="button"
-        class="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-black/60 p-3 text-white transition-colors after:pointer-events-none after:absolute after:inset-1 after:rounded-full after:border-2 after:border-transparent hover:bg-black/80 focus-visible:outline-hidden focus-visible:after:border-white"
+        class="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer max-sm:top-auto max-sm:bottom-4 max-sm:translate-y-0 rounded-full bg-black/60 p-3 text-white transition-colors after:pointer-events-none after:absolute after:inset-1 after:rounded-full after:border-2 after:border-transparent hover:bg-black/80 focus-visible:outline-hidden focus-visible:after:border-white"
         :aria-label="t('hero.previous')"
         @click="go(index - 1)"
       >
@@ -154,7 +158,7 @@ const motionLabel = computed(() => {
 
       <button
         type="button"
-        class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-black/60 p-3 text-white transition-colors after:pointer-events-none after:absolute after:inset-1 after:rounded-full after:border-2 after:border-transparent hover:bg-black/80 focus-visible:outline-hidden focus-visible:after:border-white"
+        class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer max-sm:top-auto max-sm:bottom-4 max-sm:translate-y-0 rounded-full bg-black/60 p-3 text-white transition-colors after:pointer-events-none after:absolute after:inset-1 after:rounded-full after:border-2 after:border-transparent hover:bg-black/80 focus-visible:outline-hidden focus-visible:after:border-white"
         :aria-label="t('hero.next')"
         @click="go(index + 1)"
       >

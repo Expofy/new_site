@@ -67,17 +67,24 @@ export const heroSlides: HeroSlide[] = [
     group: 'front-page',
     order: 2,
     type: 'html',
+    // The backdrop for the markup: a booth on the right, an empty sunlit wall
+    // on the left for the text to sit on.
+    image: '/hero/hero-booth.jpg',
+    imageAlt: { sv: '', en: '' },
     // Authored in the admin's Custom HTML box. Rendered as-is — see the
-    // security note in AppHeroSlide.vue.
+    // security note in AppHeroSlide.vue. Plain elements only; `.hero-html` in
+    // main.css gives them the house look.
     html: {
-      sv: '<h2>Snabbleverans på 48 timmar</h2><p>Beställ före 12.00 så lämnar din order tryckeriet inom två arbetsdagar.</p><ul><li>Fri frakt över 2 000 kr</li><li>Gratis korrektur</li><li>Svensk produktion</li></ul>',
-      en: '<h2>48-hour express delivery</h2><p>Order before noon and your job leaves the press within two working days.</p><ul><li>Free shipping over SEK 2,000</li><li>Free proofs</li><li>Made in Sweden</li></ul>',
+      sv: '<small>Vårt leveranslöfte</small><h2>Snabbleverans på <em>48&nbsp;timmar</em></h2><p>Beställ före 12.00 så lämnar din order tryckeriet inom två arbetsdagar.</p><ul><li>Fri frakt över 2&nbsp;000&nbsp;kr</li><li>Gratis korrektur</li><li>Svensk produktion</li></ul>',
+      en: '<small>Our delivery promise</small><h2><em>48-hour</em> express delivery</h2><p>Order before noon and your job leaves the press within two working days.</p><ul><li>Free shipping over SEK&nbsp;2,000</li><li>Free proofs</li><li>Made in Sweden</li></ul>',
     },
     overlay: {
-      alignX: 'center',
+      alignX: 'left',
       alignY: 'middle',
       theme: 'dark',
-      dark: false,
+      // On a phone the crop puts the booth behind the text; the scrim keeps
+      // it readable there and is next to invisible on the wall.
+      dark: true,
     },
   },
 ]
