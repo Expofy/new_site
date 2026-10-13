@@ -55,6 +55,21 @@
     "heading": "Kunder vi arbetat med",
     "subheading": "Vi har hjälpt företag, organisationer och butiker över hela Sverige."
   },
+  "faq": {
+    "heading": "Vanliga frågor",
+    "subheading": "Här hittar du svar på vanliga frågor om beställning, tryck och leverans.",
+    "help": {
+      "eyebrow": "Har du fler frågor?",
+      "heading": "Vi hjälper dig gärna!",
+      "text": "Vårt team har lång erfarenhet och hjälper dig med allt från produktval och original till leverans och montage.",
+      "points": {
+        "fast": "Snabba svar",
+        "personal": "Personlig rådgivning",
+        "quote": "Offert inom kort"
+      },
+      "cta": "Kontakta oss"
+    }
+  },
   "search": {
     "label": "Sök efter produkter",
     "placeholder": "Sök efter produkter...",

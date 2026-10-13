@@ -118,7 +118,7 @@ Blocks used by a single template live in a folder named for it — the front pag
 - Showroom gallery [REF] — plain 2-up images, no lightbox on the old site
 - Pull quote [REF]
 - Load more [REF] — "+ Mer"
-- FAQ accordion [NEW]
+- FAQ accordion [NEW] — built as `AppFaq.vue`, the front page's "Vanliga frågor", from a supplied design. Five questions on the left, each an APG accordion item with every answer closed by default and several allowed open; a "Vi hjälper dig gärna!" contact card on the right, with a support photo beside its text only when the card is 35rem wide or more. Stacks below `lg`. Questions and answers are `app/data/faq.ts`; the answers are placeholders, and Expofy must write or approve them. The photo `public/faq/support.webp` is cropped from the design mock-up.
 - Accessible lightbox for showroom [NEW]
 
 ## Product Page Structure
@@ -166,7 +166,7 @@ Everything below is required by `PROJECT-PLAN.md` but has no Saved Page. Each ne
 5. **Landing page** and its composable content/product blocks.
 6. **Showroom lightbox** with keyboard navigation and focus management.
 7. **Global states** — skip link, toast, modal, drawer, loading, empty and error states.
-8. **FAQ accordion** — listed as a front-page block in the plan; the reference front page has an info tile row instead.
+8. **FAQ accordion** — listed as a front-page block in the plan; the reference front page has an info tile row instead. *Now built from a supplied design as `AppFaq`; see above.*
 
 ## Reuse Rules
 

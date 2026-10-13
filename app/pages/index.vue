@@ -43,6 +43,7 @@ const swatches = [
   <AppNewsGrid />
   <AppShowroomTeaser />
   <AppCustomerLogos />
+  <AppFaq />
 
   <div class="mx-auto max-w-site px-4 py-12">
     <h1 class="text-h1 mb-2">{{ t('site.name') }}</h1>

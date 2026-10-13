@@ -55,6 +55,21 @@
     "heading": "Customers we have worked with",
     "subheading": "We have helped companies, organisations and shops all over Sweden."
   },
+  "faq": {
+    "heading": "Frequently asked questions",
+    "subheading": "Answers to common questions about ordering, printing and delivery.",
+    "help": {
+      "eyebrow": "Any other questions?",
+      "heading": "We are happy to help!",
+      "text": "Our team has long experience and helps you with everything from choosing products and artwork to delivery and installation.",
+      "points": {
+        "fast": "Quick answers",
+        "personal": "Personal advice",
+        "quote": "A quote in no time"
+      },
+      "cta": "Contact us"
+    }
+  },
   "search": {
     "label": "Search for products",
     "placeholder": "Search for products...",
