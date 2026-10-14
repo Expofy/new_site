@@ -54,16 +54,16 @@ What each template is actually made of, in document order.
 
 Appear across many pages; build these first.
 
-**Footer stack** is used throughout this document as shorthand for the three blocks that close every single Saved Page, in this order: partner strip, support block, footer. V2 drops the support block from it — see the help drawer below — so the built stack is partner strip and footer.
+**Footer stack** is used throughout this document as shorthand for the three blocks that close every single Saved Page, in this order: partner strip, support block, footer. V2 drops the support block from it — see the help drawer below — and folds the partner strip into the footer, so the built stack is the footer alone.
 
 - **Site header [REF]** — logo, product search field with pink submit, cart summary with count and excl-VAT total.
 - **Main navigation [REF]** — dark ink bar, mega-menu dropdowns, account link on the right. Uses `.on-ink` for focus handling.
 - **Mobile navigation drawer [REF]** — reference is `Front page/Screenshot_front_mobile_menu.png`.
 - **Breadcrumbs [REF]** — rendered on category and all three product pages only. Absent on front, showroom listing, showroom detail, blog listing, article, cart, checkout and account pages. The breadcrumb markup those pages carry is JSON-LD structured data, not a visible trail.
-- **Partner strip [REF]** — "Vi stödjer:" logo row. On all 14 Saved Pages.
+- **Partner strip [REF]** — "Vi stödjer:" logo row. On all 14 Saved Pages. **Moved:** built into `AppFooter.vue`'s bottom row, Faktum and Nattvandrarna on white tiles, logos from the Showroom Saved Page.
 - **Support block [REF]** — "Behöver du hjälp?" in support teal: contact intro, phone and email pills, and a contact form. On all 14 Saved Pages, including the front page and checkout. **Not carried over:** replaced by the help drawer.
 - **Help drawer [NEW]** — built as `AppHelpDrawer.vue`, mounted by the layout so it is on every page. A "Hjälp" tab fixed to the right edge opens a side panel, after the live site's: opening hours, phone and email, a button into the FAQ, and the contact form. The FAQ is a list grouped by category, then one answer per screen, and reads the same `app/data/faq.ts` as the front page's "Vanliga frågor" block, so a question added there appears in both.
-- **Footer [REF]** — four link columns on ink, then a trust row (certifications, credit rating, payment provider logos).
+- **Footer [REF]** — four link columns on ink, then a trust row (certifications, credit rating, payment provider logos). **Built:** `AppFooter.vue`, to a V2 mockup rather than the live site. Under the link columns, three columns split by rules: "Vi stödjer" (intro line, Faktum and Nattvandrarna tiles); "Våra kunder tycker" (the Trustpilot Mini TrustBox, `AppTrustpilotMini.vue`, with the ISO 9001/14001 badge beside it); "Säkra betalningar" (intro line, payment-methods strip, three promises with icons). Then a bottom bar: copyright, legal links, Instagram / LinkedIn / Facebook. The mockup's Sitemap link and YouTube icon are left out — there is no sitemap page and no channel. The credit-rating and UC seals are not carried over.
 - **Trustpilot review strip [REF]** — front page and product pages.
 - **Skip link, toast, modal, drawer, loading / empty / error states [NEW]** — no reference; required by the accessibility checklist.
 

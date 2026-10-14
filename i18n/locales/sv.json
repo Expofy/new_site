@@ -90,7 +90,8 @@
     "en": "Engelska"
   },
   "partners": {
-    "heading": "Vi stödjer:"
+    "heading": "Vi stödjer",
+    "intro": "Vi tror på ett mer inkluderande samhälle och stödjer organisationer som gör skillnad."
   },
   "support": {
     "formHeading": "Kontaktformulär",
@@ -163,6 +164,19 @@
   "footer": {
     "customerService": "Kundtjänst",
     "phoneHours": "Telefontid",
-    "navLabel": "Sidfotsnavigering"
+    "navLabel": "Sidfotsnavigering",
+    "isoAlt": "Certifierat enligt ISO 14001 och ISO 9001",
+    "paymentMethodsAlt": "Betalsätt: Svea, Visa, Mastercard, Swish, Trustly",
+    "reviewsHeading": "Våra kunder tycker",
+    "paymentsHeading": "Säkra betalningar",
+    "paymentsIntro": "Handla tryggt med våra betalsätt.",
+    "promises": {
+      "securePayment": "Säker betalning",
+      "fastDelivery": "Snabba leveranser",
+      "sustainable": "Ett mer hållbart val"
+    },
+    "copyright": "© {year} Expofy. Alla rättigheter förbehållna.",
+    "legalNav": "Juridisk information",
+    "socialNav": "Sociala medier"
   }
 }

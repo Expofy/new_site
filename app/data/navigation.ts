@@ -175,8 +175,24 @@ export const contactDetails = {
   hours: { sv: 'Mån–Fre 08.30 – 17.00', en: 'Mon–Fri 08.30 – 17.00' },
 }
 
-/** "Vi stödjer" partner strip. Logos are not in the Saved Page exports. */
+/** Links in the footer's bottom bar. The routes are the ones the "Expofy"
+ *  column already uses. There is no sitemap page, so the mockup's "Sitemap"
+ *  link waits for one. */
+export const legalLinks = [
+  { label: { sv: 'Integritetspolicy', en: 'Privacy policy' }, to: '/landing/policys' },
+  { label: { sv: 'Cookies', en: 'Cookies' }, to: '/landing/cookies' },
+  { label: { sv: 'Köpvillkor', en: 'Terms of purchase' }, to: '/landing/kopvillkor' },
+]
+
+/** Social profiles, from the old site's links. It has no YouTube channel. */
+export const socialLinks = [
+  { id: 'instagram', name: 'Instagram', href: 'https://www.instagram.com/expofy/' },
+  { id: 'linkedin', name: 'LinkedIn', href: 'https://www.linkedin.com/company/expofy-ab' },
+  { id: 'facebook', name: 'Facebook', href: 'https://www.facebook.com/expofy/' },
+] as const
+
+/** "Vi stödjer" logos in the footer. Files come from the Showroom Saved Page. */
 export const partners = [
-  { id: 'faktum', name: 'Faktum' },
-  { id: 'nattvandrarna', name: 'Nattvandrarna' },
+  { id: 'faktum', name: 'Faktum', logo: '/partners/faktum.png', width: 700, height: 251 },
+  { id: 'nattvandrarna', name: 'Nattvandrarna', logo: '/partners/nattvandrarna.png', width: 251, height: 201 },
 ]

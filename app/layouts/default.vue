@@ -10,10 +10,9 @@
       <slot />
     </main>
 
-    <!-- Footer stack: closes all 14 Saved Pages, in this order, minus the
-         "Behöver du hjälp?" support block, which the help drawer replaces.
-         See docs/COMPONENT-INVENTORY.md. -->
-    <AppPartnerStrip />
+    <!-- The Saved Pages close with a partner strip, a support block and the
+         footer. V2 folds the partner strip into the footer and replaces the
+         support block with the help drawer. See docs/COMPONENT-INVENTORY.md. -->
     <AppFooter />
 
     <AppHelpDrawer />

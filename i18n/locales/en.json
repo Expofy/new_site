@@ -90,7 +90,8 @@
     "en": "English"
   },
   "partners": {
-    "heading": "We support:"
+    "heading": "We support",
+    "intro": "We believe in a more inclusive society and support organisations that make a difference."
   },
   "support": {
     "formHeading": "Contact form",
@@ -163,6 +164,19 @@
   "footer": {
     "customerService": "Customer service",
     "phoneHours": "Phone hours",
-    "navLabel": "Footer navigation"
+    "navLabel": "Footer navigation",
+    "isoAlt": "Certified to ISO 14001 and ISO 9001",
+    "paymentMethodsAlt": "Payment methods: Svea, Visa, Mastercard, Swish, Trustly",
+    "reviewsHeading": "What our customers say",
+    "paymentsHeading": "Secure payments",
+    "paymentsIntro": "Shop safely with our payment methods.",
+    "promises": {
+      "securePayment": "Secure payment",
+      "fastDelivery": "Fast delivery",
+      "sustainable": "A more sustainable choice"
+    },
+    "copyright": "© {year} Expofy. All rights reserved.",
+    "legalNav": "Legal information",
+    "socialNav": "Social media"
   }
 }
